@@ -198,13 +198,20 @@ Selecting the kernel and hyperparameters
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
 \begin_layout Itemize
 Gaussian process classification
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-Flexible classification
+Flexible classification using GPs
 \end_layout
 
 \begin_layout Itemize
@@ -212,6 +219,13 @@ Laplace approximation of the posterior
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
 \begin_layout Itemize
 Main literature: Rasmussen and Williams (2006).
  
@@ -237,7 +251,7 @@ Linear regression
 
 \begin_inset Formula 
 \[
-y=f(\mathbf{x})+\mathbf{\varepsilon}
+y=f(\mathbf{x})+\epsilon
 \]
 
 \end_inset
@@ -251,7 +265,7 @@ f(\mathbf{x})=\mathbf{x}^{T}\cdot\mathbf{w}
 \end_inset
 
 and 
-\begin_inset Formula $\mathbf{\varepsilon}\sim N(0,\sigma_{n}^{2})$
+\begin_inset Formula $\epsilon\sim N(0,\sigma_{n}^{2})$
 \end_inset
 
  and iid over observations.
@@ -349,10 +363,6 @@ with
 
 \end_layout
 
-\begin_layout Itemize
-Note: these models are still linear in the weights.
-\end_layout
-
 \begin_layout EndFrame
 
 \end_layout
@@ -401,9 +411,17 @@ not
 \begin_layout Itemize
 
 \series bold
-Posterior
+Posterior 
 \series default
+[note: 
+\begin_inset Formula $\mathbf{X}$
+\end_inset
 
+ is 
+\begin_inset Formula $D\times n$
+\end_inset
+
+]
 \begin_inset Formula 
 \begin{align*}
 \mathbf{w}|\mathbf{X}\textnormal{,}\mathbf{y} & \sim N\left(\bar{\mathbf{w}},\mathbf{A}^{-1}\right)\\
@@ -419,13 +437,13 @@ Posterior
 \begin_layout Itemize
 Recall: 
 \series bold
-Posterior precision = Data Precision + Prior Precision 
+Posterior precision = Data Precision + Prior Precision
 \series default
-and all of that.
+.
 \end_layout
 
 \begin_layout Itemize
-Posterior of 
+Marginal posterior of 
 \begin_inset Formula $\mathbf{w}$
 \end_inset
 
@@ -498,7 +516,7 @@ Proof:
 \end_inset
 
  has a normal posterior.
- Use that linear combs of normals is normal.
+ Linear combs of normals is normal.
 \end_layout
 
 \begin_layout Standard
@@ -699,6 +717,9 @@ prior over a set of functions
 \begin_layout Itemize
 Kolmogorov's existence theorem for stochastic processes equates the two
  views.
+ Just make sure that the set of finite dimensional distributions are consistent:
+ adding or deleting variables does not change the marginal of the original
+ variable set.
 \end_layout
 
 \begin_layout EndFrame
@@ -817,7 +838,7 @@ Let
 \end_inset
 
  is 
-\begin_inset Formula $n\times1$
+\begin_inset Formula $p\times1$
 \end_inset
 
  and 
@@ -825,7 +846,7 @@ Let
 \end_inset
 
  is a 
-\begin_inset Formula $m\times n$
+\begin_inset Formula $m\times p$
 \end_inset
 
  constant matrix.
@@ -930,7 +951,7 @@ Marginals are normal
 , then
 \begin_inset Formula 
 \[
-\mathbf{x}_{1}\sim N(\mu_{1},\Sigma_{1})
+\mathbf{x}_{1}\sim N(\mu_{1},\Sigma_{11})
 \]
 
 \end_inset
@@ -976,8 +997,8 @@ Gaussian process regression
 \end_layout
 
 \begin_layout Itemize
-Natural choice.
- Multivariate normal (Gaussian):
+Weight-space view.
+ GP assumes
 \begin_inset Formula 
 \[
 \left(\begin{array}{c}
@@ -1028,56 +1049,12 @@ Squared exponential covariance function
 
 \begin_inset Formula 
 \[
-Cov\left(f(x_{p}),f(x_{q})\right)=K(x_{p},x_{q})=\sigma_{f}^{2}\exp\left(-\frac{1}{2}\left(x_{p}-x_{q}\right)^{2}\right)
+Cov\left(f(x_{p}),f(x_{q})\right)=k(x_{p},x_{q})=\sigma_{f}^{2}\exp\left(-\frac{1}{2}\left(x_{p}-x_{q}\right)^{2}\right)
 \]
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Itemize
-The covariance between 
-\begin_inset Formula $f(x_{p})$
-\end_inset
-
- and 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-
-\begin_inset Formula $f(x_{q})$
-\end_inset
-
-
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
- is a function of 
-\begin_inset Formula $x_{p}$
-\end_inset
-
- and 
-\begin_inset Formula $x_{q}$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Itemize
@@ -1121,7 +1098,19 @@ any
 \begin_inset Formula $x_{q}$
 \end_inset
 
- (no need for a pre-determined grid)
+.
+\end_layout
+
+\begin_layout Itemize
+Extension to multiple covariates: 
+\begin_inset Formula $\left(x_{p}-x_{q}\right)$
+\end_inset
+
+ replaced by 
+\begin_inset Formula $\left\Vert \mathbf{x}_{p}-\mathbf{x}_{q}\right\Vert $
+\end_inset
+
+.
 \end_layout
 
 \begin_layout EndFrame
@@ -1129,7 +1118,7 @@ any
 \end_layout
 
 \begin_layout BeginFrame
-Smooth f(x) - points nearby
+Smooth function - points nearby
 \end_layout
 
 \begin_layout Standard
@@ -1151,7 +1140,7 @@ Smooth f(x) - points nearby
 \end_layout
 
 \begin_layout BeginFrame
-Smooth f(x) - points nearby
+Smooth function - points nearby
 \end_layout
 
 \begin_layout Standard
@@ -1173,7 +1162,7 @@ Smooth f(x) - points nearby
 \end_layout
 
 \begin_layout BeginFrame
-Smooth f(x) - points far apart
+Smooth function - points far apart
 \end_layout
 
 \begin_layout Standard
@@ -1195,7 +1184,7 @@ Smooth f(x) - points far apart
 \end_layout
 
 \begin_layout BeginFrame
-Smooth f(x) - points far apart
+Smooth function - points far apart
 \end_layout
 
 \begin_layout Standard
@@ -1217,7 +1206,7 @@ Smooth f(x) - points far apart
 \end_layout
 
 \begin_layout BeginFrame
-Jagged f(x) - points nearby
+Jagged function - points nearby
 \end_layout
 
 \begin_layout Standard
@@ -1239,7 +1228,7 @@ Jagged f(x) - points nearby
 \end_layout
 
 \begin_layout BeginFrame
-Jagged f(x) - points nearby
+Jagged function - points nearby
 \end_layout
 
 \begin_layout Standard
@@ -1261,7 +1250,7 @@ Jagged f(x) - points nearby
 \end_layout
 
 \begin_layout BeginFrame
-Jagged f(x) - points far apart
+Jagged function - points far apart
 \end_layout
 
 \begin_layout Standard
@@ -1283,7 +1272,7 @@ Jagged f(x) - points far apart
 \end_layout
 
 \begin_layout BeginFrame
-Jagged f(x) - points far apart
+Jagged function - points far apart
 \end_layout
 
 \begin_layout Standard
@@ -1331,7 +1320,15 @@ probability distribution over functions
 \end_layout
 
 \begin_layout Itemize
-A GP is completely specified by a mean and a covariance function
+A GP is completely specified by a 
+\series bold
+mean
+\series default
+ and a 
+\series bold
+covariance function
+\series default
+
 \begin_inset Formula 
 \[
 m(x)=\mathrm{E}\left[f(x)\right]
@@ -1342,7 +1339,7 @@ m(x)=\mathrm{E}\left[f(x)\right]
 
 \begin_inset Formula 
 \[
-K(x,x')=E\left[\left(f(x)-m(x)\right)\left(f(x')-m(x')\right)\right]
+k(x,x')=E\left[\left(f(x)-m(x)\right)\left(f(x')-m(x')\right)\right]
 \]
 
 \end_inset
@@ -1363,10 +1360,14 @@ not
 \end_layout
 
 \begin_layout Itemize
-A Gaussian process (prior) is denoted by
+A 
+\series bold
+Gaussian process
+\series default
+ is denoted by
 \begin_inset Formula 
 \[
-f(x)\sim GP\left(m(x),K(x,x')\right)
+f(x)\sim GP\left(m(x),k(x,x')\right)
 \]
 
 \end_inset
@@ -1374,12 +1375,32 @@ f(x)\sim GP\left(m(x),K(x,x')\right)
 
 \end_layout
 
+\begin_layout Itemize
+
+\series bold
+Bayesian
+\series default
+: 
+\begin_inset Formula $f(x)\sim GP$
+\end_inset
+
+ encodes 
+\series bold
+prior beliefs
+\series default
+ about the unknown 
+\begin_inset Formula $f(\cdot)$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout EndFrame
 
 \end_layout
 
 \begin_layout BeginFrame
-Gaussian process regression, cont.
+A simple GP example 
 \end_layout
 
 \begin_layout Itemize
@@ -1387,7 +1408,7 @@ Example:
 \begin_inset Formula 
 \begin{align*}
 m(x) & =\sin(x)\\
-K(x,x') & =\sigma_{f}^{2}\exp\left(-\frac{1}{2}\left(\frac{x-x'}{\ell}\right)^{2}\right)
+k(x,x') & =\sigma_{f}^{2}\exp\left(-\frac{1}{2}\left(\frac{x-x'}{\ell}\right)^{2}\right)
 \end{align*}
 
 \end_inset
@@ -1402,7 +1423,7 @@ where
 
 \begin_layout Itemize
 Larger 
-\begin_inset Formula $l$
+\begin_inset Formula $\ell$
 \end_inset
 
  gives more smoothness in 
@@ -1414,18 +1435,108 @@ Larger
 
 \begin_layout Itemize
 Simulate draw from 
-\begin_inset Formula $f(x)\sim GP\left(m(x),K(x,x')\right)$
+\begin_inset Formula $f(x)\sim GP\left(m(x),k(x,x')\right)$
 \end_inset
 
  over a grid 
-\begin_inset Formula $x_{*}=(x_{1},...,x_{n})$
+\begin_inset Formula $\mathbf{x}_{*}=(x_{1},...,x_{n})$
 \end_inset
 
  by using that
 \begin_inset Formula 
 \[
-f(x_{*})\sim N\left(m(x_{*}),K(x_{*},x_{*})\right)
+f(\mathbf{x}_{*})\sim N\left(m(\mathbf{x}_{*}),K(\mathbf{x}_{*},\mathbf{x}_{*})\right)
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Note that the 
+\series bold
+kernel
+\series default
+ 
+\begin_inset Formula $k(x,x')$
+\end_inset
+
+ produces a 
+\series bold
+covariance
+\series default
+ 
+\series bold
+matrix
+\series default
+ 
+\begin_inset Formula $K(\mathbf{x}_{*},\mathbf{x}_{*})$
+\end_inset
+
+ when evaluated at the vector 
+\begin_inset Formula $\mathbf{x}_{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Simulating a GP - sine mean and SE kernel
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/GPPriorDraws_l2_sigmaf1.svg
+	scale 21
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/GPPriorDraws_l1_sigmaf1.svg
+	scale 21
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/GPPriorDraws_l05_sigmaf1.svg
+	scale 21
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/GPPriorDraws_l02_sigmaf1.svg
+	scale 21
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/GPPriorDraws_l1_sigmaf02.svg
+	scale 21
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/GPPriorDraws_l2_sigmaf02.svg
+	scale 21
 
 \end_inset
 
@@ -1667,7 +1778,7 @@ Simulation from l=1 vs l=0.2.
 \end_layout
 
 \begin_layout BeginFrame
-Gaussian process regression, cont.
+The posterior for a GPR
 \end_layout
 
 \begin_layout Itemize
@@ -1694,7 +1805,7 @@ Prior
 
 \begin_inset Formula 
 \[
-f(x)\sim GP\left(0,K(x,x')\right)
+f(x)\sim GP\left(0,k(x,x')\right)
 \]
 
 \end_inset
@@ -1798,6 +1909,73 @@ posterior
 \end_layout
 
 \begin_layout BeginFrame
+Example - Canadian wages
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/CanadianWages.eps
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Posterior of f - 
+\begin_inset Formula $\ell=0.2,0.5,1,2$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/CanadianIntervalsF.eps
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/CanadianIntervalsF_ell05.eps
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/CanadianIntervalsF_ell1.eps
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/CanadianIntervalsF_ell2.eps
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
 Prediction and Decision
 \end_layout
 
@@ -1822,7 +2000,7 @@ Choosing a point prediction
 \begin_inset Formula $\mathbf{y}_{guess}$
 \end_inset
 
- can be made by maximizing expected utility 
+ by maximizing expected utility 
 \begin_inset Formula 
 \[
 \mathcal{\bar{\mathcal{U}}}(\mathbf{y}_{guess}|\mathbf{x}_{*})=\int\mathcal{U}(\mathbf{y}_{*},\mathbf{y}_{guess})p(\mathbf{y}_{*}|\mathbf{x}_{*},\mathbf{y},\mathbf{x})d\mathbf{y}_{*}
@@ -1876,6 +2054,29 @@ true state of the world
 
 .
  
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Canadian wages - prediction with 
+\begin_inset Formula $\ell=0.5$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/CanadianIntervalsFandY_ell05.eps
+	scale 45
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout EndFrame
@@ -2065,7 +2266,7 @@ the
  
 \series bold
 
-\begin_inset Formula $\mathbf{K}=\left(k(x_{i},x_{j})\right)_{i,j=1,...,n}$
+\begin_inset Formula $\mathbf{K}=\left(k(\mathbf{x}_{i},\mathbf{x}_{j})\right)_{i,j=1,...,n}$
 \end_inset
 
 
@@ -2599,7 +2800,7 @@ p(\theta|\mathbf{y},\mathbf{X})\propto p(\mathbf{y}|\mathbf{X},\theta)p(\theta|\
 We need to compute
 \begin_inset Formula 
 \[
-p(\mathbf{y}|\mathbf{X},\theta)=\int p(\mathbf{y}|\mathbf{X},\mathbf{f},\theta)p(\mathbf{f}|\mathbf{X})d\mathbf{f}
+p(\mathbf{y}|\mathbf{X},\theta)=\int p(\mathbf{y}|\mathbf{X},\mathbf{f},\theta)p(\mathbf{f}|\mathbf{X},\theta)d\mathbf{f}
 \]
 
 \end_inset
@@ -2645,6 +2846,36 @@ RW takes a short-cut and estimates
 \end_inset
 
 .
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Canadian wages - LML determination of 
+\begin_inset Formula $\ell$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/NegativeLML_ell.eps
+	scale 35
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/NegativeLML_ellZoom.eps
+	scale 35
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout EndFrame
