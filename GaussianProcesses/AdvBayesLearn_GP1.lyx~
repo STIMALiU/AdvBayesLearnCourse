@@ -2800,7 +2800,7 @@ p(\theta|\mathbf{y},\mathbf{X})\propto p(\mathbf{y}|\mathbf{X},\theta)p(\theta|\
 We need to compute
 \begin_inset Formula 
 \[
-p(\mathbf{y}|\mathbf{X},\theta)=\int p(\mathbf{y}|\mathbf{X},\mathbf{f},\theta)p(\mathbf{f}|\mathbf{X})d\mathbf{f}
+p(\mathbf{y}|\mathbf{X},\theta)=\int p(\mathbf{y}|\mathbf{X},\mathbf{f},\theta)p(\mathbf{f}|\mathbf{X},\theta)d\mathbf{f}
 \]
 
 \end_inset
