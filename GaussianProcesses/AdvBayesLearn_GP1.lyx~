@@ -2776,7 +2776,7 @@ Kernel depends on hyperparameters
 ]
 \begin_inset Formula 
 \[
-K(x,x')=\sigma_{f}^{2}\exp\left(-\frac{1}{2}\left(\frac{x-x'}{\ell}\right)^{2}\right)
+k(\mathbf{x},\mathbf{x}')=\sigma_{f}^{2}\exp\left(-\frac{1}{2}\frac{\left\Vert \mathbf{x}-\mathbf{x}'\right\Vert ^{2}}{\ell^{2}}\right)
 \]
 
 \end_inset
@@ -2828,7 +2828,7 @@ For Gaussian process regression we can actually do this analytically
 
 \begin_inset Formula 
 \[
-\log p(\mathbf{y}|\mathbf{X},\theta)=-\frac{1}{2}\mathbf{f}^{T}K^{-1}\mathbf{f}-\frac{1}{2}\log\left|K+\sigma_{n}^{2}I\right|-\frac{n}{2}\log(2\pi)
+\log p(\mathbf{y}|\mathbf{X},\theta)=-\frac{1}{2}\mathbf{y}^{T}\left(K+\sigma_{n}^{2}I\right)\mathbf{y}-\frac{1}{2}\log\left|K+\sigma_{n}^{2}I\right|-\frac{n}{2}\log(2\pi)
 \]
 
 \end_inset
@@ -2872,6 +2872,790 @@ Canadian wages - LML determination of
 \begin_inset Graphics
 	filename Graphics/NegativeLML_ellZoom.eps
 	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Classification
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Classification
+\series default
+: 
+\series bold
+binary response
+\series default
+ 
+\begin_inset Formula $y\in\{-1,1\}$
+\end_inset
+
+ (or multi-class 
+\begin_inset Formula $y\in\{1,2,...,C\}$
+\end_inset
+
+) explained/predicted by covariates/features 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+Aim: posterior distribution 
+\begin_inset Formula $p(y|\mathbf{x})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Generative approach
+\series default
+
+\begin_inset Formula 
+\[
+p(y|\mathbf{x})\propto p(\mathbf{x}|y)p(y)
+\]
+
+\end_inset
+
+Need to model the class-conditional distributions 
+\begin_inset Formula $p(\mathbf{x}|y)$
+\end_inset
+
+ for each 
+\begin_inset Formula $y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Discriminative approach
+\series default
+ models the posterior 
+\begin_inset Formula $p(y|\mathbf{x})$
+\end_inset
+
+ directly.
+ Example: linear logistic regression
+\begin_inset Formula 
+\[
+Pr(y=1|\mathbf{x})=\lambda(\mathbf{x}^{T}\mathbf{w})
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\lambda(z)$
+\end_inset
+
+ is the logistic
+\series bold
+ link function
+\series default
+ 
+\begin_inset Formula 
+\[
+\lambda(z)=\frac{1}{1+\exp(-z)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lambda(z)$
+\end_inset
+
+ 'squashes' the linear prediction 
+\begin_inset Formula $\mathbf{x}^{T}\mathbf{w}\in\mathbb{R}$
+\end_inset
+
+ into 
+\begin_inset Formula $\lambda(\mathbf{x}^{T}\mathbf{w})\in[0,1]$
+\end_inset
+
+ .
+\end_layout
+
+\begin_layout Itemize
+Can also use the normal CDF 
+\begin_inset Formula $\Phi(z)$
+\end_inset
+
+ for squashing.
+ 
+\series bold
+Probit regression
+\series default
+.
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Classification
+\end_layout
+
+\begin_layout Itemize
+The posterior of the label 
+\begin_inset Formula $p(y|\mathbf{x})$
+\end_inset
+
+ is clearly a probabilistic classifier.
+\end_layout
+
+\begin_layout Itemize
+Visual representation: level contours of 
+\begin_inset Formula $p(y|\mathbf{x})$
+\end_inset
+
+ over 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+-space.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/petalMinHypEP.eps
+	scale 22
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Decision boundaries.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Zero-one loss
+\series default
+ 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ allocate to class 
+\begin_inset Formula $c$
+\end_inset
+
+ which maximizes 
+\begin_inset Formula $Pr(y=c|\mathbf{x})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Reject option
+\series default
+.
+ Refuse to classify when 
+\begin_inset Formula $Pr(y=c|\mathbf{x})$
+\end_inset
+
+ are small for all 
+\begin_inset Formula $c$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+GP classification
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Linear logistic regression
+\series default
+ 
+\begin_inset Formula 
+\[
+Pr(y=1|\mathbf{x})=\lambda(\mathbf{x}^{T}\mathbf{w})
+\]
+
+\end_inset
+
+has linear decision boundaries (conditional on 
+\begin_inset Formula $\mathbf{w}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+Obvious 
+\series bold
+GP extension
+\series default
+: replace 
+\begin_inset Formula $\mathbf{x}^{T}\mathbf{w}$
+\end_inset
+
+ by 
+\begin_inset Formula 
+\[
+f(\mathbf{x})\sim GP(0,k(\mathbf{x},\mathbf{x}'))
+\]
+
+\end_inset
+
+ and squash 
+\begin_inset Formula $f$
+\end_inset
+
+ through logistic function (or normal CDF)
+\begin_inset Formula 
+\[
+Pr(y=1|\mathbf{x})=\lambda(f(\mathbf{x}))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Squashing f
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/linearComb.svg
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/linearCombsquash.svg
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/f.svg
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/fsquash.svg
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+GP classification - inference
+\end_layout
+
+\begin_layout Itemize
+Prediction for a test case 
+\begin_inset Formula $\mathbf{x}_{*}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+Pr(y_{*}=+1|\mathbf{X},\mathbf{y},\mathbf{x}_{*})=\int\sigma(f_{*})p(f_{*}|\mathbf{X},\mathbf{x}_{*},\mathbf{f})df_{*}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\sigma(f_{*})$
+\end_inset
+
+ is some sigmoidal function (logistic, normal CDF...) and 
+\begin_inset Formula $f_{*}$
+\end_inset
+
+ is the latent 
+\begin_inset Formula $f$
+\end_inset
+
+ at the test input 
+\begin_inset Formula $\mathbf{x}_{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The predictive distribution of 
+\begin_inset Formula $f_{*}$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+p(f_{*}|\mathbf{X},\mathbf{x}_{*},\mathbf{f})=\int p(f_{*}|\mathbf{X},\mathbf{x}_{*},\mathbf{f})p(\mathbf{f}|\mathbf{X},\mathbf{y})d\mathbf{f}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+p(\mathbf{f}|\mathbf{X},\mathbf{y})\propto p(\mathbf{y}|\mathbf{f})p(\mathbf{f}|\mathbf{X})
+\]
+
+\end_inset
+
+ is the posterior of 
+\begin_inset Formula $\mathbf{f}$
+\end_inset
+
+ from the training data.
+\end_layout
+
+\begin_layout Itemize
+Note that 
+\begin_inset Formula $p(\mathbf{y}|\mathbf{f})$
+\end_inset
+
+ is no longer Gaussian in classification problems.
+ Posterior 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $p(\mathbf{f}|\mathbf{X},\mathbf{y})$
+\end_inset
+
+ is not analytically tractable.
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+The Laplace approximation
+\end_layout
+
+\begin_layout Itemize
+Approximates 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $p(\mathbf{f}|\mathbf{X},\mathbf{y})$
+\end_inset
+
+ with 
+\begin_inset Formula $N(\hat{\mathbf{f}},\mathbf{A}^{-1})$
+\end_inset
+
+, where 
+\begin_inset Formula $\hat{\mathbf{f}}$
+\end_inset
+
+ is the posterior mode and 
+\begin_inset Formula $\mathbf{A}$
+\end_inset
+
+ is the negative Hessian of the log posterior at 
+\begin_inset Formula $\mathbf{f}=\hat{\mathbf{f}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The log posterior is (proportional to)
+\begin_inset Formula 
+\begin{align*}
+\Psi(\mathbf{f}) & =\text{\log}p(\mathbf{y}|\mathbf{f})+\log p(\mathbf{f}|\mathbf{X})\\
+ & =\text{\log}p(\mathbf{y}|\mathbf{f})-\frac{1}{2}\mathbf{f}^{T}K^{-1}\mathbf{f}-\frac{1}{2}\log\left|K\right|-\frac{n}{2}\log2\pi
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Differentiating wrt 
+\begin_inset Formula $\mathbf{f}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\nabla\Psi(\mathbf{f}) & =\nabla\log p(\mathbf{y}|\mathbf{f})-K^{-1}\mathbf{f}\\
+\nabla\nabla\Psi(\mathbf{f}) & =\nabla\nabla\log p(\mathbf{y}|\mathbf{f})-K^{-1}=-W-K^{-1}
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $W$
+\end_inset
+
+ is a diagonal matrix since each 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ only depends on its 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Use 
+\series bold
+Newton's method
+\series default
+ to iterate to the mode.
+\end_layout
+
+\begin_layout Itemize
+The elements 
+\begin_inset Formula $\partial/\partial f_{i}\log p(y_{i}|f_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $\partial^{2}/\partial f_{i}^{2}\log p(y_{i}|f_{i})$
+\end_inset
+
+ are given in the table on page 43 in RW for the logistic and probit cases.
+\end_layout
+
+\begin_layout Itemize
+Approximate predictions of 
+\begin_inset Formula $f_{*}$
+\end_inset
+
+are not possible.
+ Predictions of 
+\begin_inset Formula $y_{*}$
+\end_inset
+
+ require one-dimensional numerical integration.
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Iris data - sepal - SE kernel with ARD
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/sepalData.eps
+	scale 22
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+Laplace: 
+\begin_inset Formula $\hat{\ell}_{1}=1.7214,\hat{\ell}_{2}=185.5040,\sigma_{f}=1.4361$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+EP: 
+\begin_inset Formula $\hat{\ell}_{1}=1.7189,\hat{\ell}_{2}=55.5003,\sigma_{f}=1.4343$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/sepalMinHypLaplace.eps
+	scale 22
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/sepalMinHypEP.eps
+	scale 22
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Iris data - petal - SE kernel with ARD
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/petalData.eps
+	scale 22
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+Laplace: 
+\begin_inset Formula $\hat{\ell}_{1}=1.7606,\hat{\ell}_{2}=0.8804,\sigma_{f}=4.9129$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+EP: 
+\begin_inset Formula $\hat{\ell}_{1}=2.1139,\hat{\ell}_{2}=1.0720,\sigma_{f}=5.3369$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/petalMinHypLaplace.eps
+	scale 22
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/petalMinHypEP.eps
+	scale 22
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Toy data 1 - SE kernel with ARD
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/DataSet1.eps
+	scale 22
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+EP: 
+\begin_inset Formula $\hat{\ell}_{1}=2.4503,\hat{\ell}_{2}=721.7405,\sigma_{f}=4.7540$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/DataSet1MinHypLaplace.eps
+	scale 22
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/DataSet1MinHypEP.eps
+	scale 22
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Toy data 2 - SE kernel with ARD
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/DataSet2.eps
+	scale 22
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+EP: 
+\begin_inset Formula $\hat{\ell}_{1}=8.3831,\hat{\ell}_{2}=1.9587,\sigma_{f}=4.5483$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/DataSet2MinHypLaplace.eps
+	scale 22
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/DataSet2MinHypEP.eps
+	scale 22
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Toy data 3 - SE kernel with ARD
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/DataSet3.eps
+	scale 22
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+Laplace: 
+\begin_inset Formula $\hat{\ell}_{1}=0.7726,\hat{\ell}_{2}=0.6974,\sigma_{f}=11.7854$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+EP:
+\begin_inset Formula $\hat{\ell}_{1}=1.2685,\hat{\ell}_{2}=1.0941,\sigma_{f}=17.2774$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Graphics/DataSet3MinHypLaplace.eps
+	scale 22
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename Graphics/DataSet3MinHypEP.eps
+	scale 22
 
 \end_inset
 
