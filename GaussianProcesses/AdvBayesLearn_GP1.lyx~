@@ -2828,7 +2828,7 @@ For Gaussian process regression we can actually do this analytically
 
 \begin_inset Formula 
 \[
-\log p(\mathbf{y}|\mathbf{X},\theta)=-\frac{1}{2}\mathbf{y}^{T}\left(K+\sigma_{n}^{2}I\right)\mathbf{y}-\frac{1}{2}\log\left|K+\sigma_{n}^{2}I\right|-\frac{n}{2}\log(2\pi)
+\log p(\mathbf{y}|\mathbf{X},\theta)=-\frac{1}{2}\mathbf{y}^{T}\left(K+\sigma_{n}^{2}I\right)^{-1}\mathbf{y}-\frac{1}{2}\log\left|K+\sigma_{n}^{2}I\right|-\frac{n}{2}\log(2\pi)
 \]
 
 \end_inset
@@ -3393,11 +3393,19 @@ The elements
 \end_layout
 
 \begin_layout Itemize
-Approximate predictions of 
+
+\series bold
+Approximate predictions 
+\series default
+of 
 \begin_inset Formula $f_{*}$
 \end_inset
 
-are not possible.
+are 
+\series bold
+possible
+\series default
+.
  Predictions of 
 \begin_inset Formula $y_{*}$
 \end_inset
