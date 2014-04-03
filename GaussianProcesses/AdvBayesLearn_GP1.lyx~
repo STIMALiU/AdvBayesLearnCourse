@@ -2819,6 +2819,17 @@ For Gaussian process regression we can actually do this analytically [since
 \end_inset
 
 ]
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Add out-of-sample decomposition of marginal likelihood.
+ And refer to figs on page 23-26 + bands for noise variance.
+\end_layout
+
+\end_inset
+
+
 \family roman
 \series medium
 \shape up
