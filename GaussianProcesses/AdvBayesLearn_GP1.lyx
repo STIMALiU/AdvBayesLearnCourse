@@ -2813,7 +2813,23 @@ where
 \end_layout
 
 \begin_layout Itemize
-For Gaussian process regression we can actually do this analytically
+For Gaussian process regression we can actually do this analytically [since
+ 
+\begin_inset Formula $\mathbf{y}|\mathbf{X},\theta\sim N(0,K+\sigma_{n}^{2}I)$
+\end_inset
+
+]
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Add out-of-sample decomposition of marginal likelihood.
+ And refer to figs on page 23-26 + bands for noise variance.
+\end_layout
+
+\end_inset
+
+
 \family roman
 \series medium
 \shape up

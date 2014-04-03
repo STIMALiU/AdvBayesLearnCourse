@@ -2813,7 +2813,12 @@ where
 \end_layout
 
 \begin_layout Itemize
-For Gaussian process regression we can actually do this analytically
+For Gaussian process regression we can actually do this analytically [since
+ 
+\begin_inset Formula $\mathbf{y}|\mathbf{X},\theta\sim N(0,K+\sigma_{n}^{2}I)$
+\end_inset
+
+]
 \family roman
 \series medium
 \shape up
@@ -3209,7 +3214,7 @@ Prediction for a test case
 :
 \begin_inset Formula 
 \[
-Pr(y_{*}=+1|\mathbf{X},\mathbf{y},\mathbf{x}_{*})=\int\sigma(f_{*})p(f_{*}|\mathbf{X},\mathbf{x}_{*},\mathbf{f})df_{*}
+Pr(y_{*}=+1|\mathbf{X},\mathbf{y},\mathbf{x}_{*})=\int\sigma(f_{*})p(f_{*}|\mathbf{x}_{*},\mathbf{X,y})df_{*}
 \]
 
 \end_inset
@@ -3241,7 +3246,7 @@ The predictive distribution of
  is
 \begin_inset Formula 
 \[
-p(f_{*}|\mathbf{X},\mathbf{x}_{*},\mathbf{f})=\int p(f_{*}|\mathbf{X},\mathbf{x}_{*},\mathbf{f})p(\mathbf{f}|\mathbf{X},\mathbf{y})d\mathbf{f}
+p(f_{*}|\mathbf{x}_{*},\mathbf{X},\mathbf{y})=\int p(f_{*}|\mathbf{X},\mathbf{x}_{*},\mathbf{f})p(\mathbf{f}|\mathbf{X},\mathbf{y})d\mathbf{f}
 \]
 
 \end_inset
