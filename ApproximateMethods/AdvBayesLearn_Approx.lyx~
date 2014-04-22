@@ -203,6 +203,18 @@ Approximate Bayesian Computations (ABC)
 
 \end_layout
 
+\begin_layout Itemize
+Expectation propagation (EP)
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Integrated Nested Laplace Approximation (INLA)
+\end_layout
+
 \end_deeper
 \begin_layout Separator
 

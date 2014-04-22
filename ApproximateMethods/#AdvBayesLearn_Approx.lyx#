@@ -203,6 +203,10 @@ Approximate Bayesian Computations (ABC)
 
 \end_layout
 
+\begin_layout Itemize
+Integrated Nested Laplace Approximation (INLA)
+\end_layout
+
 \end_deeper
 \begin_layout Separator
 
@@ -791,11 +795,15 @@ IG\left(A+\frac{n}{2},B+\frac{1}{2}E_{q(\mu)}(\mathbf{x}-\mu)'(\mathbf{x}-\mu)\r
 
 \end_inset
 
-and
+but what is 
+\begin_inset Formula $E_{q(\mu)}(\mathbf{x}-\mu)'(\mathbf{x}-\mu)$
+\end_inset
+
+?
 \begin_inset Formula 
 \begin{align*}
  & E_{q(\mu)}(\mathbf{x}-\mu)'(\mathbf{x}-\mu)=\\
- & E_{q(\mu)}\left[\left(\mathbf{x}-E_{q(\mu)}(\mu)\right)+\left(E_{q(\mu)}(\mu)-\mu\right)\mathbf{1}_{n}\right]'\left[\left(\mathbf{x}-E_{q(\mu)}(\mu)\right)+\left(E_{q(\mu)}(\mu)-\mu\right)\mathbf{1}_{n}\right]\\
+ & E_{q(\mu)}\left[\left(\mathbf{x}-E_{q(\mu)}\mu\right)+\left(E_{q(\mu)}\mu-\mu\right)\mathbf{1}_{n}\right]'\left[\left(\mathbf{x}-E_{q(\mu)}(\mu)\right)+\left(E_{q(\mu)}(\mu)-\mu\right)\mathbf{1}_{n}\right]\\
  & =E_{q(\mu)}\left[\left(\mathbf{x}-E_{q(\mu)}(\mu)\right)'\left(\mathbf{x}-E_{q(\mu)}(\mu)\right)+\left(E_{q(\mu)}(\mu)-\mu\right)^{2}n\right]\\
  & =\left(\mathbf{x}-E_{q(\mu)}(\mu)\right)'\left(\mathbf{x}-E_{q(\mu)}(\mu)\right)+n\cdot Var_{q(\mu)}(\mu)
 \end{align*}
@@ -816,7 +824,7 @@ Important:
 \end_inset
 
  and 
-\begin_inset Formula $Var_{q(\mu)}(\mu)$
+\begin_inset Formula $Var_{\mu}(\mu)$
 \end_inset
 
  is the mean and variance of the 
@@ -851,10 +859,10 @@ Normal model example - Updating
 \begin_deeper
 \begin_layout Itemize
 Easier to go back to the form 
-\begin_inset Formula $q_{\mu}(\mu)\propto\exp\left(E_{q(\sigma^{2})}\ln p(\mathbf{y},\mu,\sigma^{2})\right)$
+\begin_inset Formula $q_{\mu}(\mu)\propto\exp\left(E_{\sigma^{2}}\ln p(\mathbf{y},\mu,\sigma^{2})\right)$
 \end_inset
 
- 
+, where 
 \begin_inset Formula 
 \begin{align*}
 \ln p(\mathbf{y},\mu,\sigma^{2}) & =\ln p(\mathbf{y}|\mu,\sigma^{2})+\ln p(\mu)+\ln p(\sigma^{2})\\
@@ -866,7 +874,7 @@ Easier to go back to the form
 
 \begin_inset Formula 
 \[
-q_{\mu}(\mu)\propto\exp\left(-E_{q(\sigma^{2})}\left(\frac{1}{\sigma^{2}}\right)\frac{1}{2}\sum_{i=1}^{n}(x_{i}-\mu)^{2}-\frac{1}{2\sigma_{\mu}^{2}}(\mu-\mu_{\mu})^{2}\right)
+q_{\mu}(\mu)\propto\exp\left(-E_{\sigma^{2}}\left(\frac{1}{\sigma^{2}}\right)\frac{1}{2}\sum_{i=1}^{n}(x_{i}-\mu)^{2}-\frac{1}{2\sigma_{\mu}^{2}}(\mu-\mu_{\mu})^{2}\right)
 \]
 
 \end_inset
@@ -878,7 +886,7 @@ q_{\mu}(\mu)\propto\exp\left(-E_{q(\sigma^{2})}\left(\frac{1}{\sigma^{2}}\right)
 Completing the square shows
 \begin_inset Formula 
 \[
-q_{\mu}(\mu)=N\left(E_{q(\mu)}(\mu),Var_{q(\mu)}(\mu)\right)
+q_{\mu}(\mu)=N\left(E_{\mu}(\mu),Var_{\mu}(\mu)\right)
 \]
 
 \end_inset
@@ -886,15 +894,15 @@ q_{\mu}(\mu)=N\left(E_{q(\mu)}(\mu),Var_{q(\mu)}(\mu)\right)
 where 
 \begin_inset Formula 
 \[
-E_{\mu}(\mu)=\frac{n\bar{x}E_{q(\sigma^{2})}\left(\frac{1}{\sigma^{2}}\right)+\mu_{\mu}/\sigma_{\mu}^{2}}{nE_{q(\sigma^{2})}\left(\frac{1}{\sigma^{2}}\right)+1/\sigma_{\mu}^{2}}
+E_{\mu}(\mu)=\frac{n\bar{x}E_{\sigma^{2}}\left(\frac{1}{\sigma^{2}}\right)+\mu_{\mu}/\sigma_{\mu}^{2}}{nE_{\sigma^{2}}\left(\frac{1}{\sigma^{2}}\right)+1/\sigma_{\mu}^{2}}
 \]
 
 \end_inset
 
- 
+and 
 \begin_inset Formula 
 \[
-Var_{\mu}(\mu)=\frac{1}{nE_{q(\sigma^{2})}\left(\frac{1}{\sigma^{2}}\right)+1/\sigma_{\mu}^{2}}
+Var_{\mu}(\mu)=\frac{1}{nE_{\sigma^{2}}\left(\frac{1}{\sigma^{2}}\right)+1/\sigma_{\mu}^{2}}
 \]
 
 \end_inset
@@ -1215,7 +1223,7 @@ Updating
 \begin_inset Formula 
 \begin{align*}
 \ln q_{\mathbf{a}}(\mathbf{a}) & \propto E_{q(\beta)}\ln p(y,\beta,\mathbf{a})\propto\sum_{i=1}^{n}\left(y_{i}\ln I(a_{i}\geq0)+(1-y_{i})\ln I(a_{i}<0)\right)\\
- & -\frac{1}{2}E_{q(\beta)}(\mathbf{a}-\mathbf{X}\beta)'(\mathbf{a}-\mathbf{X}\beta)+const
+ & -\frac{1}{2}E_{q(\beta)}(\mathbf{a}-\mathbf{X}\beta)'(\mathbf{a}-\mathbf{X}\beta)
 \end{align*}
 
 \end_inset
@@ -1365,7 +1373,7 @@ E(\mathbf{y}-\mathbf{m})'(\mathbf{y}-\mathbf{m})=trace(\Omega)+(\mu-\mathbf{m})'
 So
 \begin_inset Formula 
 \begin{align*}
-\ln q_{\beta}(\beta) & \propto-\frac{1}{2}trace(\Sigma_{\mathbf{a}})-\frac{1}{2}(\mu_{q(\mathbf{a})}-\mathbf{X}\beta)'(\mu_{q(\mathbf{a})}-\mathbf{X}\beta)\\
+\ln q_{\beta}(\beta) & \propto-\frac{1}{2}trace(\Sigma_{\mathbf{a}})+(\mu_{\mathbf{a}}-\mathbf{X}\beta)'(\mu_{\mathbf{a}}-\mathbf{X}\beta)\\
  & -\frac{1}{2}(\beta-\mu_{\beta})'\Sigma_{\beta}(\beta-\mu_{\beta})
 \end{align*}
 
@@ -1380,7 +1388,7 @@ The variational approximation of
 \end_inset
 
  is like the posterior from regressing 
-\begin_inset Formula $\mu_{q(\mathbf{a})}$
+\begin_inset Formula $\mu_{\mathbf{a}}$
 \end_inset
 
  on 
@@ -1437,7 +1445,7 @@ q_{\beta}(\beta)=N\left(\mu_{q(\beta)},\left(\mathbf{X}'\mathbf{X}+\Sigma_{\beta
 and 
 \begin_inset Formula 
 \[
-\mu_{q(\beta)}=\left(\mathbf{X}'\mathbf{X}+\Sigma_{\beta}^{-1}\right)^{-1}\left(\mathbf{X}'\mu_{q(\mathbf{a})}+\Sigma_{\beta}^{-1}\mu_{\beta}\right)
+\mu_{q(\beta)}=\left(\mathbf{X}'\mathbf{X}+\Sigma_{\beta}^{-1}\right)^{-1}\left(\mathbf{X}'\mu_{\mathbf{a}}+\Sigma_{\beta}^{-1}\mu_{\beta}\right)
 \]
 
 \end_inset
@@ -1445,7 +1453,7 @@ and
 where 
 \begin_inset Formula 
 \[
-\mu_{q(\mathbf{a})}=X\mu_{q(\beta)}+\frac{\phi\left(X\mu_{q(\beta)}\right)}{\Phi\left(X\mu_{q(\beta)}\right)^{\mathbf{y}}\left[\Phi\left(X\mu_{q(\beta)}\right)-\mathbf{1}_{n}\right]^{\mathbf{1_{n}-y}}}
+\mu_{\mathbf{a}}=X\mu_{q(\beta)}+\frac{\phi\left(X\mu_{q(\beta)}\right)}{\Phi\left(X\mu_{q(\beta)}\right)^{\mathbf{y}}\left[\Phi\left(X\mu_{q(\beta)}\right)-\mathbf{1}_{n}\right]^{\mathbf{1_{n}-y}}}
 \]
 
 \end_inset
@@ -1526,11 +1534,7 @@ Posterior is intractable.
 \end_layout
 
 \begin_layout Itemize
-Assume 
-\series bold
-variational approximation
-\series default
- to be Gaussian
+Assume variational approximation to be Gaussian
 \begin_inset Formula 
 \[
 q_{\beta}(\beta)=N(\mu_{q},\Sigma_{q})
@@ -1555,7 +1559,6 @@ Use Newton-Raphson to find
 \end_inset
 
 .
- See Ormerod and Wand (2010).
 \end_layout
 
 \end_deeper
@@ -1627,36 +1630,6 @@ Missing data:
 
 \end_deeper
 \begin_layout Itemize
-EM: 
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Get rid of 
-\begin_inset Formula $\mathbf{z}$
-\end_inset
-
- by computing the expected log-likelihood 
-\begin_inset Formula $E_{\mathbf{z}|\theta}\ln L(\theta,\mathbf{z)}$
-\end_inset
-
- (E-step)
-\end_layout
-
-\begin_layout Itemize
-Maximize 
-\begin_inset Formula $E_{\mathbf{z}|\theta}\ln L(\theta,\mathbf{z)}$
-\end_inset
-
- wrt to 
-\begin_inset Formula $\theta$
-\end_inset
-
- (M-step)
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
 VBEM approximation of posterior
 \begin_inset Formula 
 \[
@@ -1677,6 +1650,10 @@ Improves on EM by modelling the uncertainty in
 \end_layout
 
 \end_deeper
+\begin_layout Separator
+
+\end_layout
+
 \begin_layout Separator
 
 \end_layout
@@ -1723,7 +1700,7 @@ Variational MCMC
 \end_layout
 
 \begin_layout Itemize
-VB is fast and accurate for computing 
+VB is useful and accurate for computing 
 \series bold
 log predictive scores
 \series default
@@ -1747,11 +1724,8 @@ LPS
 \end_layout
 
 \begin_layout Itemize
-VB is 
-\series bold
-fast
-\series default
- in this setting since it can approximate each sequential posterior 
+VB is fast in this setting since it can approximate each sequential posterior
+ 
 \begin_inset Formula $p(\theta|y_{t-1}^{H})$
 \end_inset
 
@@ -1767,12 +1741,9 @@ fast
 \end_layout
 
 \begin_layout Itemize
-VB seems 
-\series bold
-accurate
-\series default
- for approximating LPS, at least when the prediction uncertainty is mainly
- dominated by the future error uncertainty and not by parameter uncertainty.
+VB seems accurate for approximating LPS, at least when the prediction uncertaint
+y is mainly dominated by the future error uncertainty and not by parameter
+ uncertainty.
 \end_layout
 
 \end_deeper
@@ -1805,11 +1776,7 @@ Examples:
 
 \begin_deeper
 \begin_layout Itemize
-Likelihood is given by an 
-\series bold
-intractable high-dimensional integral
-\series default
-
+Likelihood is given by an intractable high-dimensional integral
 \begin_inset Formula 
 \[
 \ell(\theta|\mathbf{y})=\int\ell^{*}(\theta|\mathbf{y},\mathbf{u})d\mathbf{u}.
@@ -1821,15 +1788,11 @@ intractable high-dimensional integral
 \end_layout
 
 \begin_layout Itemize
-
-\series bold
 Normalizing constant 
 \begin_inset Formula $Z_{\theta}$
 \end_inset
 
- is costly
-\series default
- or intractable
+ is costly or intractable
 \begin_inset Formula 
 \[
 \ell(\theta|\mathbf{y})=\ell_{1}(\theta|\mathbf{y})/Z_{\theta}
@@ -1838,19 +1801,6 @@ Normalizing constant
 \end_inset
 
 
-\end_layout
-
-\begin_layout Itemize
-Likelihood is unavailable because the 
-\series bold
-PDF does not exist in closed form
-\series default
-.
- 
-\begin_inset Formula $\alpha$
-\end_inset
-
--stable distributions.
 \end_layout
 
 \end_deeper
@@ -2120,7 +2070,7 @@ Generate
 until
 \series default
  
-\begin_inset Formula $\rho\left[\eta(\mathbf{z}),\eta(\mathbf{y})\right]\leq\varepsilon$
+\begin_inset Formula $\rho\left[\eta(\mathbf{z}),\mathbf{\eta}(\mathbf{y})\right]\leq\varepsilon$
 \end_inset
 
 
@@ -2207,7 +2157,7 @@ Likelihood-free rejection sampler 2, cont.
 The algorithm samples from the joint distribution
 \begin_inset Formula 
 \[
-\pi_{\varepsilon}(\theta,\mathbf{z}|\mathbf{y})=\frac{\pi(\theta)f(\mathbf{z}|\theta)\mathbb{I}_{A_{\varepsilon,\mathbf{y}}}(\mathbf{z})}{\int_{A_{\varepsilon,\mathbf{y}}\times\theta}\pi(\theta)f(\mathbf{z}|\theta)d\mathbf{z}d\theta}
+\pi_{\varepsilon}(\theta,\mathbf{z}|\mathbf{y})=\frac{\pi(\theta)f(\mathbf{z}|\theta)\mathbb{I}_{A_{\varepsilon,\mathbf{y}}}(\mathbf{z})}{\int_{A_{\varepsilon,\mathbf{y}}\times\theta}\pi(\theta)f(\mathbf{z}|\theta)\mathbb{I}_{A_{\varepsilon,\mathbf{y}}}(\mathbf{z})d\mathbf{z}d\theta}
 \]
 
 \end_inset
@@ -2215,7 +2165,7 @@ The algorithm samples from the joint distribution
 where 
 \begin_inset Formula 
 \[
-A_{\varepsilon,\mathbf{y}}=\left\{ \mathbf{z}\in\mathcal{D}|\rho\left[\eta(\mathbf{z}),\eta(\mathbf{y})\right]\leq\varepsilon\right\} 
+A_{\varepsilon,\mathbf{y}}=\left\{ \mathbf{z}\in\mathcal{D}|\rho\left[\eta(\mathbf{z}),\mathbf{\eta}(\mathbf{y})\right]\leq\varepsilon\right\} 
 \]
 
 \end_inset
@@ -2506,10 +2456,7 @@ Replacing the crude
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Itemize
+where 
 \begin_inset Formula $K_{\varepsilon}(\cdot)$
 \end_inset
 
@@ -2517,13 +2464,7 @@ Replacing the crude
 \begin_inset Formula $\varepsilon>0$
 \end_inset
 
- (think variance).
-\series bold
-
-\begin_inset VSpace medskip
-\end_inset
-
-
+.
 \end_layout
 
 \begin_layout Itemize
@@ -2540,12 +2481,6 @@ The Bayes estimator from
 \end_inset
 
 .
-\series bold
-
-\begin_inset VSpace medskip
-\end_inset
-
-
 \end_layout
 
 \begin_layout Itemize
@@ -2608,10 +2543,6 @@ Summary statistics
 
  should be nearly sufficient.
  Which ones? Creativity ...
-\begin_inset VSpace bigskip
-\end_inset
-
-
 \end_layout
 
 \begin_layout Itemize
@@ -2620,10 +2551,6 @@ Choice of
 \end_inset
 
  is crucial.
-\begin_inset VSpace bigskip
-\end_inset
-
-
 \end_layout
 
 \begin_layout Itemize
@@ -2637,10 +2564,6 @@ Choice of
 \end_inset
 
  gives better approximation at higher computational cost.
-\begin_inset VSpace bigskip
-\end_inset
-
-
 \end_layout
 
 \begin_layout Itemize
@@ -2652,7 +2575,7 @@ Common choice of
 \begin_inset Formula $0.1$
 \end_inset
 
-% or so) percentile of simulated distances 
+% or so) percentile of simulated distances
 \begin_inset Formula $\rho\left[\eta(\mathbf{z}'),\eta(\mathbf{y})\right]$
 \end_inset
 
@@ -2679,48 +2602,32 @@ Post-processing of ABC output
 
 \begin_deeper
 \begin_layout Itemize
-Same algorithms, but allowing for larger 
+Sample algorithms, but allowing for larger 
 \begin_inset Formula $\varepsilon$
 \end_inset
 
  by post-processing the ABC output.
-\begin_inset VSpace medskip
-\end_inset
-
-
 \end_layout
 
 \begin_layout Itemize
-Keep 
-\series bold
-all
-\series default
- 
+Do not reject 
 \begin_inset Formula $\theta$
 \end_inset
 
- draws regardless of how far 
+ draws that generate 
 \begin_inset Formula $\mathbf{z}$
 \end_inset
 
- is from the actual data 
-\begin_inset Formula $\mathbf{y}$
-\end_inset
-
-, but shrink the 
+ far from the actual data, but shrink the 
 \begin_inset Formula $\theta$
 \end_inset
 
- draws using
+ draws using the (multivariate?) regression
 \begin_inset Formula 
 \[
 \theta*=\theta-\left(\eta(\mathbf{z})-\eta(\mathbf{y})\right)'\hat{\beta}
 \]
 
-\end_inset
-
-
-\begin_inset VSpace medskip
 \end_inset
 
 
@@ -2747,10 +2654,6 @@ K_{\delta}\left\{ \rho\left[\eta(\mathbf{z}),\eta(\mathbf{y})\right]\right\} .
 \end_inset
 
 
-\begin_inset VSpace medskip
-\end_inset
-
-
 \end_layout
 
 \begin_layout Itemize
@@ -2763,10 +2666,6 @@ Kernel bandwidth
 \end_inset
 
 .
-\begin_inset VSpace medskip
-\end_inset
-
-
 \end_layout
 
 \begin_layout Itemize
@@ -2842,7 +2741,7 @@ The
 \series bold
 Bayesian solution for model inference
 \series default
- is the posterior distribution: 
+: the posterior distribution: 
 \begin_inset Formula $\pi(\mathcal{M}=m|\mathbf{y})$
 \end_inset
 
@@ -2996,7 +2895,7 @@ end for
 \end_layout
 
 \begin_layout Standard
-\begin_inset VSpace medskip
+\begin_inset VSpace bigskip
 \end_inset
 
 
@@ -3016,26 +2915,8 @@ ABC estimate
 \end_inset
 
 
-\begin_inset VSpace smallskip
-\end_inset
-
-
 \end_layout
 
-\begin_layout Itemize
-Example - comparing:
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-AR-processes (homoscedastic variance)
-\end_layout
-
-\begin_layout Itemize
-GARCH models (volatility clustering)
-\end_layout
-
-\end_deeper
 \end_deeper
 \begin_layout Separator
 
