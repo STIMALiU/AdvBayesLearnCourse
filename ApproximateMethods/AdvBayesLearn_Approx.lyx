@@ -477,7 +477,7 @@ connects to Gibbs sampling
 
 \begin_inset Formula 
 \[
-q_{i}(\theta)\propto\exp\left(E_{-\theta_{i}}\ln p(\theta_{i}|\mathrm{rest})\right)
+q_{i}(\theta_{i})\propto\exp\left(E_{-\theta_{i}}\ln p(\theta_{i}|\mathrm{rest})\right)
 \]
 
 \end_inset
@@ -1082,6 +1082,159 @@ is negligible.
 status open
 
 \begin_layout Plain Layout
+Normal example from Murphy (
+\begin_inset Formula $\lambda^{-1}=\sigma^{2}$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Initial values
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+After updating 
+\begin_inset Formula $q_{\mu}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/unigaussVbDemo1.pdf
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/unigaussVbDemo2.pdf
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+After updating 
+\begin_inset Formula $q_{\sigma^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+At convergence
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/unigaussVbDemo3.pdf
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Figures/unigaussVbDemo4.pdf
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Probit regression 
 \end_layout
 
@@ -1467,12 +1620,28 @@ The lower bound
 
 \end_layout
 
+\begin_layout Separator
+
+\end_layout
+
 \begin_layout Frame
 \begin_inset Argument 4
 status open
 
 \begin_layout Plain Layout
-Poission regression 
+Probit regression - updating
+\series bold
+\size largest
+\color blue
+ 
+\begin_inset Formula $\beta$
+\end_inset
+
+
+\series default
+\size default
+\color inherit
+ 
 \end_layout
 
 \end_inset
@@ -1482,80 +1651,104 @@ Poission regression
 
 \begin_deeper
 \begin_layout Itemize
-
-\series bold
-Model
-\series default
-:
+We therefore have
 \begin_inset Formula 
 \[
-Y_{i}|x_{i},\beta\overset{ind.}{\sim}Poisson\left(x_{i}'\beta\right)
+q_{\beta}(\beta)=N\left(\mu_{q(\beta)},\left(\mathbf{X}'\mathbf{X}+\Sigma_{\beta}^{-1}\right)^{-1}\right)
 \]
 
 \end_inset
 
-
-\begin_inset VSpace smallskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Prior
-\series default
-: 
-\begin_inset Formula $\beta\sim N(\mu_{\beta},\Sigma_{\beta})$
-\end_inset
-
-
-\begin_inset VSpace medskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Posterior is intractable.
-\begin_inset VSpace medskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Assume 
-\series bold
-variational approximation
-\series default
- to be Gaussian
+and 
 \begin_inset Formula 
 \[
-q_{\beta}(\beta)=N(\mu_{q},\Sigma_{q})
+\mu_{q(\beta)}=\left(\mathbf{X}'\mathbf{X}+\Sigma_{\beta}^{-1}\right)^{-1}\left(\mathbf{X}'\mu_{q(\mathbf{a})}+\Sigma_{\beta}^{-1}\mu_{\beta}\right)
 \]
 
 \end_inset
 
+where 
+\begin_inset Formula 
+\[
+\mu_{q(\mathbf{a})}=X\mu_{q(\beta)}+\frac{\phi\left(X\mu_{q(\beta)}\right)}{\Phi\left(X\mu_{q(\beta)}\right)^{\mathbf{y}}\left[\Phi\left(X\mu_{q(\beta)}\right)-\mathbf{1}_{n}\right]^{\mathbf{1_{n}-y}}}
+\]
 
-\begin_inset VSpace smallskip
+\end_inset
+
+which follows from the expected value formula for a truncated distribution.
+\end_layout
+
+\begin_layout Itemize
+The lower bound 
+\begin_inset Formula $\ln\underline{p}(\mathbf{y};q)$
+\end_inset
+
+ is given in Ormerod and Wand (2010) where also the complete algorithm in
+ given as Algorithm 4.
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Probit example (n=200 observations) 
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
-Use Newton-Raphson to find 
-\begin_inset Formula $\mu_{q},\Sigma_{q}$
+\begin_deeper
+\begin_layout Standard
+\align center
+
+\series bold
+\begin_inset Graphics
+	filename Figures/Probit_MCMCvsVB.eps
+	scale 55
+
 \end_inset
 
- that maximizes the (tractable) lower bound 
-\begin_inset Formula $\ln\underline{p}(\mathbf{y};\mu_{q},\Sigma_{q})$
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Probit example (n=200 observations) 
+\end_layout
+
 \end_inset
 
-.
- See Ormerod and Wand (2010).
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+
+\series bold
+\begin_inset Graphics
+	filename Figures/Probit_LowerBound.eps
+	scale 45
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
