@@ -1744,7 +1744,7 @@ Probit example (n=200 observations)
 \series bold
 \begin_inset Graphics
 	filename Figures/Probit_LowerBound.eps
-	scale 55
+	scale 45
 
 \end_inset
 
