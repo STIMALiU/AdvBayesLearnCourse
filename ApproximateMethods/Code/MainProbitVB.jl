@@ -4,6 +4,7 @@
 cd("/home/mv/Dropbox/Teaching/AdvBayesLearn/VT2014/ApproximateMethods/Code/")
 include("VBlib.jl")
 using MAT
+using Distributions
 
 # Loading data
 data = matread("MrozChibJeliaData.mat")
@@ -13,11 +14,11 @@ n,p = size(X)
 
 # Prior
 muBeta = zeros(p,1)
-SigmaBeta = 10^2*eye(p)
+SigmaBeta = 25^2*eye(p)
 invSigmaBeta = inv(SigmaBeta)
 
 # Algorithmic settings
 tol = 1e-8
 
-muQBeta, SigmaQBeta = ProbitVB(y, X, muBeta, invSigmaBeta, tol)
+muQbeta, SigmaQbeta, lowerBounds = ProbitVB(y, X, muBeta, invSigmaBeta, tol)
 
