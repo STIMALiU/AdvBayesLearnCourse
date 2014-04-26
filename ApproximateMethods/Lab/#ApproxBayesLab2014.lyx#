@@ -457,8 +457,8 @@ You are not allowed to use existing toolboxes
 \begin_inset Text
 
 \begin_layout Plain Layout
-Existing basic functions for matrix algebra, random number generators, density
- functions etc are allowed.
+Existing basic functions for matrix algebra, random number generators etc
+ are allowed.
 \end_layout
 
 \end_inset
@@ -563,8 +563,7 @@ The posterior for
 
 , so the prior used here is a special case of the Gamma prior used in the
  previous course).
- Let's now complicate things a bit by assuming that you are uncertain about
- 
+ Let complicate things a bit by assuming that you are uncertain about 
 \begin_inset Formula $\beta$
 \end_inset
 
@@ -576,7 +575,7 @@ The posterior for
  This gives us the following hierarchial model
 \begin_inset Formula 
 \begin{align*}
-X_{1},...,X_{n}|\lambda & \overset{iid}{\sim}Poi\mathbf{}sson(\lambda)\\
+X_{1},...,X_{n}|\lambda & \overset{iid}{\sim}Poisson(\lambda)\\
 \lambda & |\beta\sim Exponential(\beta)\\
 \beta & \sim Exponential(\theta)
 \end{align*}
@@ -669,15 +668,12 @@ This takes some work (you will not solve this in
 \end_inset
 
 , you can proceed with the implementation and use a fixed number of iterations
- rather than monitoring changes in 
-\begin_inset Formula $\mathbf{}\ln\underline{p}(\mathbf{x};q)$
+ rather than to monitor changes in 
+\begin_inset Formula $\ln\underline{p}(\mathbf{x};q)$
 \end_inset
 
 .
-\begin_inset Newline newline
-\end_inset
-
-[Hints: both 
+ [Hints: both 
 \begin_inset Formula $q(\lambda)$
 \end_inset
 
@@ -693,17 +689,12 @@ This takes some work (you will not solve this in
 \begin_inset Formula $E(\ln X)=\psi(a)-\ln(\beta)$
 \end_inset
 
-, where 
-\begin_inset Formula $\psi(a)$
-\end_inset
-
- is the digamma function, which is available in many languages, including
- Matlab/Julia/R/Python-Scipy, and even in Perl.].
+].
 \end_layout
 
 \begin_layout Enumerate
 Use the VB implementation to approximate joint posterior 
-\begin_inset Formula $p(\lambda,\beta|\mathbf{x})$
+\begin_inset Formula $\pi(\lambda,\beta|\mathbf{x})$
 \end_inset
 
  in the dataset 
@@ -726,13 +717,7 @@ ABC
 \series default
 .
  Use ABC to approximate the posterior from Problem 1 above.
- Make your own creative choice of summary statistic and distance function.
- Explore the sensitivity with respect to 
-\begin_inset Formula $\varepsilon$
-\end_inset
-
-, and the choice of summary statistics.
- Compare with the Gibbs sampling results in Problem 1.
+ Make you own creative choice of summary statistic and distance function.
  Implement:
 \end_layout
 
@@ -763,9 +748,7 @@ Likelihood-free MCMC sampler.
 \end_layout
 
 \begin_layout Enumerate
-Correct the draws from a) and b) using post-processing of the ABC output
- with the regression approach.
- 
+Noisy ABC using a Gaussian Kernel.
 \end_layout
 
 \end_deeper

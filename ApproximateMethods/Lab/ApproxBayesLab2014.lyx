@@ -457,8 +457,8 @@ You are not allowed to use existing toolboxes
 \begin_inset Text
 
 \begin_layout Plain Layout
-Existing basic functions for matrix algebra, random number generators etc
- are allowed.
+Existing basic functions for matrix algebra, random number generators, density
+ functions etc are allowed.
 \end_layout
 
 \end_inset
@@ -536,53 +536,236 @@ height "1pt"
 \end_layout
 
 \begin_layout Enumerate
-Variational Bayes.
- ff
+
+\series bold
+Variational Bayes
+\series default
+.
+ Consider first the usual the iid Poisson model for count data with an expontial
+ prior:
+\begin_inset Formula 
+\begin{align*}
+X_{1},...,X_{n}|\lambda & \overset{iid}{\sim}Poisson(\lambda)\\
+\lambda & |\beta\sim Exponential(\beta)
+\end{align*}
+
+\end_inset
+
+The posterior for 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is easily shown to be a Gamma distribution (see my slides from the Bayesian
+ Learning course at http://www.ida.liu.se/~732A46/2013/BayesLearnL2.pdf and
+ note that 
+\begin_inset Formula $Exponential(\beta)=Gamma(1,\beta)$
+\end_inset
+
+, so the prior used here is a special case of the Gamma prior used in the
+ previous course).
+ Let's now complicate things a bit by assuming that you are uncertain about
+ 
+\begin_inset Formula $\beta$
+\end_inset
+
+, and you want to assign an exponential prior also to 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+ This gives us the following hierarchial model
+\begin_inset Formula 
+\begin{align*}
+X_{1},...,X_{n}|\lambda & \overset{iid}{\sim}Poi\mathbf{}sson(\lambda)\\
+\lambda & |\beta\sim Exponential(\beta)\\
+\beta & \sim Exponential(\theta)
+\end{align*}
+
+\end_inset
+
+We will assume that 
+\begin_inset Formula $\theta=5$
+\end_inset
+
+.
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
-Plot of the posterior mean of 
-\begin_inset Formula $f$
+Let the observed training data be 
+\begin_inset Formula $\mathbf{x}=(x_{1},...,x_{n})$
 \end_inset
 
- and 
-\begin_inset Formula $95\%$
+.
+ Let 
+\begin_inset Formula $Gamma(a,b)$
 \end_inset
 
- probability intervals.
+ denote a gamma distribution parametrized so that the mean is 
+\begin_inset Formula $a/b$
+\end_inset
+
+.
+ [Note that there are two parametrizations of the gamma (see wikipedia)
+ and you need to find out which one is used in your programming language.]
+ Set up a Gibbs sampler to sample from the joint posterior 
+\begin_inset Formula $\pi(\lambda,\beta|\mathbf{x})$
+\end_inset
+
+ by iterating the following two updating steps:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Simulate a draw from 
+\begin_inset Formula $\lambda|\beta,\mathbf{x}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Simulate a draw from 
+\begin_inset Formula $\beta|\lambda,\mathbf{x}$
+\end_inset
+
+
 \end_layout
 
 \end_deeper
 \begin_layout Enumerate
-ABC.
- South African heart-disease data.
- 
+Use your Gibbs sampler to approximate joint posterior 
+\begin_inset Formula $p(\lambda,\beta|\mathbf{x})$
+\end_inset
+
+ in the dataset 
+\series bold
+x
+\series default
+ = (1,0,3,4,2,6,2,3,1,1).
+\end_layout
+
+\begin_layout Enumerate
+Derive and implement a mean field VB approximation the joint posterior:
+\begin_inset Formula 
+\[
+q(\lambda,\beta)=q(\lambda)\cdot q(\beta)
+\]
+
+\end_inset
+
+This takes some work (you will not solve this in 
+\begin_inset Formula $5$
+\end_inset
+
+ minutes ...), but it is only straightforward algebra.
+ The derivation of the lower bound 
+\begin_inset Formula $\ln\underline{p}(\mathbf{x};q)$
+\end_inset
+
+ is quite messy (but also straightforward).
+ If you are unable to get 
+\begin_inset Formula $\ln\underline{p}(\mathbf{x};q)$
+\end_inset
+
+, you can proceed with the implementation and use a fixed number of iterations
+ rather than monitoring changes in 
+\begin_inset Formula $\mathbf{}\ln\underline{p}(\mathbf{x};q)$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+[Hints: both 
+\begin_inset Formula $q(\lambda)$
+\end_inset
+
+ and 
+\begin_inset Formula $q(\beta)$
+\end_inset
+
+ are Gamma densities, and you will need the result: if 
+\begin_inset Formula $X\sim Gamma(a,b),$
+\end_inset
+
+ then 
+\begin_inset Formula $E(\ln X)=\psi(a)-\ln(\beta)$
+\end_inset
+
+, where 
+\begin_inset Formula $\psi(a)$
+\end_inset
+
+ is the digamma function, which is available in many languages, including
+ Matlab/Julia/R/Python-Scipy, and even in Perl.].
+\end_layout
+
+\begin_layout Enumerate
+Use the VB implementation to approximate joint posterior 
+\begin_inset Formula $p(\lambda,\beta|\mathbf{x})$
+\end_inset
+
+ in the dataset 
+\series bold
+x
+\series default
+ = (1,0,3,4,2,6,2,3,1,1).
+\end_layout
+
+\begin_layout Enumerate
+Compare the quality of the results from the Gibbs sampler and the VB approx.
+ Compare computing times.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+ABC
+\series default
+.
+ Use ABC to approximate the posterior from Problem 1 above.
+ Make your own creative choice of summary statistic and distance function.
+ Explore the sensitivity with respect to 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+, and the choice of summary statistics.
+ Compare with the Gibbs sampling results in Problem 1.
+ Implement:
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
-Use standard software (no need to code this part by yourself) to fit a linear
- logistic regression using only two input variables 
-\family sans
-age
-\family default
+Likelihood-free rejection sampler 2 
+\end_layout
+
+\begin_layout Enumerate
+Likelihood-free MCMC sampler.
+ Let 
+\begin_inset Formula $q(\cdot|\theta^{(t-1)})$
+\end_inset
+
+ be simple random walk Metropolis kernel 
+\begin_inset Formula $\theta'|\theta^{(t-1)}\sim N(\theta^{(t-1)},c^{2}I$
+\end_inset
+
+), where 
+\begin_inset Formula $\theta=(\lambda,\beta)$
+\end_inset
+
  and 
-\family sans
-obesity
-\family default
-.
- Plot the posterior probability 
-\begin_inset Formula $Pr(\text{chd}=1|\mathbf{x})$
+\begin_inset Formula $c>0$
 \end_inset
 
- in the two-dimensional input space.
- Overlay the data.
- Evaluate the accuracy and precision of the classifier using 
-\begin_inset Formula $10$
-\end_inset
+ is a tuning constant.
+\end_layout
 
--fold cross-validation.
+\begin_layout Enumerate
+Correct the draws from a) and b) using post-processing of the ABC output
+ with the regression approach.
+ 
 \end_layout
 
 \end_deeper
@@ -590,7 +773,8 @@ obesity
 \begin_inset VSpace bigskip
 \end_inset
 
-Good luck! Remember, on this lab, the exact solution is the wrong solution!
+Good luck! Remember that sometimes an approximate answer is the correct
+ answer!
 \end_layout
 
 \end_body
