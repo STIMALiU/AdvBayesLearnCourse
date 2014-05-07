@@ -3,8 +3,9 @@ function [muQbeta, SigmaQBeta, lowerBounds] = ProbitVB(y, X, muBeta, invSigmaBet
 	% Load packages, defining shortcut functions 
 	
 	% Prelim
+    p = size(X,2);
 	SigmaQBeta = inv(X'*X + invSigmaBeta);
-
+    
 	lowerBoundOld = 1;
 	lowerBound = 1 + 2*tol;
 	muQbeta = X \ y; % Initialize with a linear regression estimate
@@ -24,7 +25,7 @@ function [muQbeta, SigmaQBeta, lowerBounds] = ProbitVB(y, X, muBeta, invSigmaBet
 
         % Computing the lower bound
 		lowerBoundOld = lowerBound;
-		lowerBound = y'*log(PhiFunc) + (1-y)'*log(1-PhiFunc) - 0.5*(muQbeta - muBeta)'*invSigmaBeta*(muQbeta - muBeta) - 0.5*log(det(SigmaQBeta*X'*X)) % FIXME: last term is constant.
+		lowerBound = y'*log(PhiFunc) + (1-y)'*log(1-PhiFunc) - 0.5*(muQbeta - muBeta)'*invSigmaBeta*(muQbeta - muBeta) - 0.5*log(det(SigmaQBeta*X'*X + eye(p))) % FIXME: last term is constant.
         lowerBounds(count) = lowerBound;
     end
   

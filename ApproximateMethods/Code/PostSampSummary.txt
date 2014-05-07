@@ -1,0 +1,108 @@
+
+--------------------------------------------------------------------------------------------------------------------
+                                Summary of Posterior Sampling and Marginal Likelihood Estimators                             
+                         Author: Mattias Villani, Sveriges Riksbank and Stockholm University                        
+                                               April 30, 2014. 11:29:38                            
+--------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+Proposal Density Details      
+
+Simulation Method             Scale Factor          Df           Fine Tune
+--------------------------------------------------------------------------------------------------------------------
+Accept-Reject MH                 1.00               10.00           1.00
+Importance Sampling              1.00               10.00             NA
+Metropolis                       0.20                  NA             NA
+Independence MH                  1.00               10.00             NA
+Indep-RW-MH                      1.00               10.00             NA
+
+
+
+
+
+Parameter       True Mean      Post Mode      AR-MH Mean     Imp Mean       Metro Mean     IndepMH Me     IRW Mean       
+--------------------------------------------------------------------------------------------------------------------
+\beta_{1}            NaN         +0.374            NaN            NaN            NaN         +0.390            NaN
+\beta_{2}            NaN         -0.012            NaN            NaN            NaN         -0.013            NaN
+\beta_{3}            NaN         +0.109            NaN            NaN            NaN         +0.112            NaN
+\beta_{4}            NaN         +0.102            NaN            NaN            NaN         +0.102            NaN
+\beta_{5}            NaN         -0.090            NaN            NaN            NaN         -0.080            NaN
+\beta_{6}            NaN         -0.049            NaN            NaN            NaN         -0.051            NaN
+\beta_{7}            NaN         -0.814            NaN            NaN            NaN         -0.835            NaN
+\beta_{8}            NaN         -0.012            NaN            NaN            NaN         -0.014            NaN
+
+
+
+
+
+Parameter       True Std       Hessian St     AR-MH Std      Imp Std        Metro Std      IndepMH St     IRW Std        
+--------------------------------------------------------------------------------------------------------------------
+\beta_{1}            NaN          0.898            NaN            NaN            NaN          0.908            NaN
+\beta_{2}            NaN          0.009            NaN            NaN            NaN          0.009            NaN
+\beta_{3}            NaN          0.046            NaN            NaN            NaN          0.047            NaN
+\beta_{4}            NaN          0.039            NaN            NaN            NaN          0.040            NaN
+\beta_{5}            NaN          0.138            NaN            NaN            NaN          0.144            NaN
+\beta_{6}            NaN          0.015            NaN            NaN            NaN          0.016            NaN
+\beta_{7}            NaN          0.223            NaN            NaN            NaN          0.226            NaN
+\beta_{8}            NaN          0.080            NaN            NaN            NaN          0.084            NaN
+
+
+
+
+
+Inefficiency Factors          
+
+Parameter       AR-MH          Metropolis     IndepMH        IndepRW        
+--------------------------------------------------------------------------------------------------------------------
+\beta_{1}            NaN            NaN         +1.814            NaN
+\beta_{2}            NaN            NaN         +1.603            NaN
+\beta_{3}            NaN            NaN         +1.662            NaN
+\beta_{4}            NaN            NaN         +1.971            NaN
+\beta_{5}            NaN            NaN         +2.235            NaN
+\beta_{6}            NaN            NaN         +1.953            NaN
+\beta_{7}            NaN            NaN         +1.640            NaN
+\beta_{8}            NaN            NaN         +1.956            NaN
+
+
+
+
+
+Acceptance Probabilities      
+
+Simulation Method           Accept Probs 1        Accept Probs 2
+--------------------------------------------------------------------------------------------------------------------
+Accept-Reject MH                  NaN                 NaN
+Importance Sampling               NaN
+Metropolis                        NaN
+Independence MH                 0.758
+Accept-Reject MH                  NaN                 NaN
+
+
+
+
+
+Computing Time                
+
+Simulation Method          Time in Seconds
+--------------------------------------------------------------------------------------------------------------------
+Accept-Reject MH                  NaN
+Importance Sampling               NaN
+Metropolis                        NaN
+Independence MH                 5.276
+IRW-MH                            NaN
+
+
+
+
+
+Marginal Likelihood Estimation
+
+Estimation Method               AR-MH          Importance          Metropolis            Indep MH              IRW-MH
+--------------------------------------------------------------------------------------------------------------------
+True                              NaN                 NaN                 NaN                 NaN                 NaN
+Modified Harmonic                  NA                  NA                  NA            -148.876                  NA
+Chib-Jeliazkov                     NA                  NA                  NA                  NA                  NA
+Importance Weight                  NA                  NA                  NA            -148.857                  NA

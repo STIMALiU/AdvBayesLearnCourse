@@ -1,4 +1,4 @@
-#LyX 2.1 created this file. For more info see http://www.lyx.org/
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
 \lyxformat 474
 \begin_document
 \begin_header
@@ -552,7 +552,7 @@ X_{1},...,X_{n}|\lambda & \overset{iid}{\sim}Poisson(\lambda)\\
 \end_inset
 
 The posterior for 
-\begin_inset Formula $\theta$
+\begin_inset Formula $\lambda$
 \end_inset
 
  is easily shown to be a Gamma distribution (see my slides from the Bayesian
@@ -576,7 +576,7 @@ The posterior for
  This gives us the following hierarchial model
 \begin_inset Formula 
 \begin{align*}
-X_{1},...,X_{n}|\lambda & \overset{iid}{\sim}Poi\mathbf{}sson(\lambda)\\
+X_{1},...,X_{n}|\lambda & \overset{iid}{\sim}Poisson(\lambda)\\
 \lambda & |\beta\sim Exponential(\beta)\\
 \beta & \sim Exponential(\theta)
 \end{align*}
@@ -685,20 +685,7 @@ This takes some work (you will not solve this in
 \begin_inset Formula $q(\beta)$
 \end_inset
 
- are Gamma densities, and you will need the result: if 
-\begin_inset Formula $X\sim Gamma(a,b),$
-\end_inset
-
- then 
-\begin_inset Formula $E(\ln X)=\psi(a)-\ln(\beta)$
-\end_inset
-
-, where 
-\begin_inset Formula $\psi(a)$
-\end_inset
-
- is the digamma function, which is available in many languages, including
- Matlab/Julia/R/Python-Scipy, and even in Perl.].
+ are Gamma densities].
 \end_layout
 
 \begin_layout Enumerate
