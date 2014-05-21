@@ -1,0 +1,2855 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+\setcounter{MaxMatrixCols}{10}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathpazo}
+\usepackage{hyperref}
+\usepackage{multimedia}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\definecolor{RawSienna}{cmyk}{0,0.87,0.82,0.31}
+\definecolor{gray97}{cmyk}{0,0,0,0.03}
+\definecolor{robinsegg}{cmyk}{0.18,0.04,0,0.07}
+\definecolor{cola}{cmyk}{0,0.315,0.35,0.155}
+
+\newenvironment{stepenumerate}{\begin{enumerate}[<+->]}{\end{enumerate}}
+\newenvironment{stepitemize}{\begin{itemize}[<+->]}{\end{itemize} }
+\newenvironment{stepenumeratewithalert}{\begin{enumerate}[<+-| alert@+>]}{\end{enumerate}}
+\newenvironment{stepitemizewithalert}{\begin{itemize}[<+-| alert@+>]}{\end{itemize} }
+\usecolortheme[named=RawSienna]{structure}
+%\usecolortheme[RGB={205,0,0}]{structure}
+\setbeamertemplate{navigation symbols}{}
+\useoutertheme{infolines}
+\usetheme{default}
+\setbeamertemplate{blocks}[shadow=true]
+%\setbeamerfont{structure}{shape=\itshape}
+\usefonttheme{structuresmallcapsserif}
+\setbeamertemplate{background canvas}{
+ % \ifnum \thepage>0 \relax % we are on the first page
+%\includegraphics[width=\paperwidth,height=\paperheight]{/home/mv/Dropbox/Foton/IconsWallpaper/greyribbonLighter.jpg}
+ % \else
+ 	% No background for page 2 and onwards
+ % \fi
+}
+\end_preamble
+\options xcolor=svgnames
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman palatino
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 0
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 0
+\use_package mhchem 1
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Adv Bayesian Learning
+\end_layout
+
+\end_inset
+
+Advanced Bayesian Learning
+\begin_inset Newline newline
+\end_inset
+
+Bayesian Nonparametrics
+\begin_inset Newline newline
+\end_inset
+
+Spring 2014
+\end_layout
+
+\begin_layout Author
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Mattias Villani
+\end_layout
+
+\end_inset
+
+Mattias Villani
+\end_layout
+
+\begin_layout Institute
+
+\series bold
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Statistics, LiU
+\end_layout
+
+\end_inset
+
+Division of Statistics
+\begin_inset Newline newline
+\end_inset
+
+Department of Computer and Information Science
+\begin_inset Newline newline
+\end_inset
+
+Linköping University 
+\end_layout
+
+\begin_layout Date
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Topic overview
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Reminder: Multinomial data - Dirichlet prior
+\end_layout
+
+\begin_layout Itemize
+Bayesian histograms
+\end_layout
+
+\begin_layout Itemize
+Dirichlet process
+\end_layout
+
+\begin_layout Itemize
+Beyond the Dirichlet process: Pitman-Yor and Probit stick-breaking
+\end_layout
+
+\begin_layout Itemize
+The Dirichlet process mixtures
+\end_layout
+
+\begin_layout Itemize
+MCMC for Dirichlet process mixtures
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+The Dirichlet distribution
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\theta\sim\mathrm{Dirichlet}(a_{1},...,a_{k})$
+\end_inset
+
+ with density
+\begin_inset Formula 
+\[
+p(\theta_{1},\theta_{2},...,\theta_{k})\propto\prod_{j=1}^{k}\theta_{j}^{a_{j}-1}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Define 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\alpha=\sum_{j=1}^{k}a_{j}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ and 
+\begin_inset Formula $\pi_{0}=a/\alpha$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Expected value
+\series default
+ and 
+\series bold
+variance
+\series default
+ of the 
+\begin_inset Formula $Dirichlet(a_{1},...,a_{k})$
+\end_inset
+
+ distribution
+\begin_inset Formula 
+\begin{align*}
+\mathrm{E}(\theta_{j}) & =\frac{a_{j}}{\alpha}=\pi_{0j}\qquad\qquad\mathrm{V}(\theta_{j})=\frac{\mathrm{E}(\theta_{j})\left[1-\mathrm{E}(\theta_{j})\right]}{1+\alpha}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Note that 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\alpha$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ is a 
+\series bold
+precision
+\series default
+ parameter (large 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ means low variance).
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Conjugate analysis for multinomial data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Data
+\series default
+: 
+\begin_inset Formula $y=(n_{1},...,n_{k})$
+\end_inset
+
+, where 
+\begin_inset Formula $n_{j}=$
+\end_inset
+
+ number of items in category 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Prior
+\series default
+ 
+\begin_inset Formula 
+\[
+\theta\sim\mathrm{Dirichlet}(a_{1},...,a_{k})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Likelihood
+\series default
+
+\begin_inset Formula 
+\[
+p(n_{1},n_{2},...,n_{k}|\theta_{1},\theta_{2},...,\theta_{k})\propto\prod_{j=1}^{k}\theta_{j}^{n_{j}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Posterior
+\series default
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+\theta|n_{1},...,n_{k}\sim\mathrm{Dirichlet}(n_{1}+a_{1},...,n_{k}+a_{k})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Posterior expected value
+\series default
+
+\begin_inset Formula 
+\[
+E(\theta_{j}|n_{1},...,n_{k})=\frac{n_{j}+a_{j}}{n+\alpha}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Bayesian histograms
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Histogram partitions the data space 
+\begin_inset Formula $\xi_{0}<\xi_{1}<...<\xi_{k}$
+\end_inset
+
+ and records how many observations end up in each bin (
+\begin_inset Formula $B_{h}$
+\end_inset
+
+).
+ Multinomial data.
+\end_layout
+
+\begin_layout Itemize
+Probability model for 
+\series bold
+histograms 
+\begin_inset Formula 
+\[
+f(y)=\sum_{h=1}^{k}1_{\xi_{h-1}<y\leq\xi_{h}}\left(\frac{\pi_{h}}{\xi_{h}-\xi_{h-1}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n_{h}=$
+\end_inset
+
+ number of data points in partition (bin) 
+\begin_inset Formula $h$
+\end_inset
+
+: 
+\begin_inset Formula $\xi_{h-1}<y\leq\xi_{h}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Prior
+\series default
+ on 
+\begin_inset Formula $\pi=(\pi_{1},...,\pi_{k})$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pi\sim Dirichlet(a_{1},...,a_{k})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Posterior
+\series default
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+\pi|n_{1},...,n_{k}\sim\mathrm{Dirichlet}(n_{1}+a_{1},...,n_{k}+a_{k})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Illustration of Bayesian histograms
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename bayesianhist.eps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Bayesian histograms, cont.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Posterior
+\series default
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+\pi|n_{1},...,n_{k}\sim\mathrm{Dirichlet}(n_{1}+a_{1},...,n_{k}+a_{k})
+\]
+
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Specify 
+\begin_inset Formula $a_{1},..,a_{k}$
+\end_inset
+
+ through 
+\begin_inset Formula $\pi_{0}=(\pi_{01},...,\pi_{0k})$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha=\sum_{j=1}^{k}a_{j}$
+\end_inset
+
+.
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Specify 
+\begin_inset Formula $\pi_{0}$
+\end_inset
+
+ from a 
+\series bold
+base distribution
+\series default
+ 
+\begin_inset Formula $P_{0}$
+\end_inset
+
+.
+ For the 
+\begin_inset Formula $h$
+\end_inset
+
+th bin:
+\begin_inset Formula 
+\[
+\pi_{0h}=P_{0}(B_{h})=\mathrm{Pr}(\xi_{h-1}<y\leq\xi_{h})
+\]
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The Dirichlet prior is a 
+\series bold
+computational dream
+\series default
+, and it is 
+\series bold
+easy to specify
+\series default
+ the hyperparameters 
+\begin_inset Formula $\pi_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+But, the Dirichlet prior 
+\series bold
+lacks smoothness
+\series default
+: all pairs of bins have negative correlations, regardless of how near they
+ are.
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sensitive to the choice of bins.
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Bayesian histogram example
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Data.eps
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Prior.eps
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PosteriorAlpha10.eps
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Bayesian histogram example
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename PosteriorAlpha1.eps
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PosteriorAlpha10.eps
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename PosteriorAlpha100.eps
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PosteriorAlpha1000.eps
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Histograms are sensitive to the choice of bins
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename PosteriorAlpha1.eps
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PosteriorAlpha1NewBins.eps
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename PosteriorAlpha10.eps
+	scale 25
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename PosteriorAlpha10NewBins.eps
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+The Dirichlet process
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Let 
+\begin_inset Formula $B_{1},B_{2},...,B_{k}$
+\end_inset
+
+ be a partition of the outcome space 
+\begin_inset Formula $\text{\Omega}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $P(B_{1}),...,P(B_{k})$
+\end_inset
+
+ denote the distribution over the partition.
+\end_layout
+
+\begin_layout Itemize
+Dirichlet distribution is a 
+\series bold
+distribution over a space of distributions
+\series default
+:
+\begin_inset Formula 
+\[
+(P(B_{1}),...,P(B_{k}))\sim Dirichlet(\alpha P_{0}(B_{1}),...,\alpha P_{0}(B_{k}))
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $P_{0}$
+\end_inset
+
+ is a fixed probability measure (e.g.
+ the 
+\begin_inset Formula $N(0,1)$
+\end_inset
+
+ density).
+\end_layout
+
+\begin_layout Itemize
+Dirichlet distribution is closed under summation or splitting of bins.
+ 
+\end_layout
+
+\begin_layout Itemize
+Can be used to define a 
+\series bold
+stochastic process
+\series default
+ in a consistent way.
+ Compare with GPs.
+\end_layout
+
+\begin_layout Itemize
+A random probability measure 
+\begin_inset Formula $P$
+\end_inset
+
+ follows a 
+\series bold
+Dirichlet process
+\series default
+ 
+\begin_inset Formula $P\sim DP(\alpha\cdot P_{0})$
+\end_inset
+
+ with base measure 
+\begin_inset Formula $P_{0}$
+\end_inset
+
+ and precision parameter 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ iff 
+\begin_inset Formula 
+\[
+(P(B_{1}),...,P(B_{k}))\sim Dirichlet(\alpha P_{0}(B_{1}),...,\alpha P_{0}(B_{k}))
+\]
+
+\end_inset
+
+for any finite (measureable) partition 
+\begin_inset Formula $B_{1},...,B_{k}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+The Dirichlet process - properties
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If 
+\begin_inset Formula $P\sim DP(\alpha P_{0})$
+\end_inset
+
+ then
+\begin_inset Formula 
+\[
+P(B)\sim\mathrm{Beta}\left[\alpha P_{0}(B),\alpha\left(1-P_{0}(B)\right)\right],\;\text{for any }B\in\mathcal{B}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+E\left[P(B)\right]=P_{0}(B)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathrm{Var}\left[P(B)\right]=P_{0}(B)\left[1-P_{0}(B)\right]/(1+\alpha)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Model
+\series default
+
+\begin_inset Formula 
+\[
+y_{i}|P\overset{iid}{\sim}P\;,\;\text{for }i=1,...,n
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Prior
+\series default
+
+\begin_inset Formula 
+\[
+P\sim DP(\alpha P_{0})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Posterior
+\series default
+ for a 
+\series bold
+finite partition
+\series default
+, 
+\begin_inset Formula $P(B_{1}),...,P(B_{k})|\mathbf{y}$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+Dir\left(\alpha P_{0}(B_{1})+\sum_{i=1}^{n}1_{y_{i}\in B_{1}},...,\alpha P_{0}(B_{k})+\sum_{i=1}^{n}1_{y_{i}\in B_{k}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+The Dirichlet process - properties
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Posterior
+\series default
+ for the unknown probability distribution 
+\begin_inset Formula $P$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+P|y_{1},...,y_{n}\sim DP\left(\alpha P_{0}+\sum_{i=1}^{n}\delta_{y_{i}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Since 
+\begin_inset Formula 
+\[
+P(B)\sim Beta\left(\alpha P_{0}(B)+\sum_{i=1}^{n}1_{y_{i}\in B},\alpha(1-P_{0}(B))+\sum_{i=1}^{n}1_{y_{i}\in B^{c}}\right)
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+E\left(P(B)|y_{1},...,y_{n}\right)=\left(\frac{\alpha}{\alpha+n}\right)P_{0}(B)+\left(\frac{n}{\alpha+n}\right)\sum_{i=1}^{n}\frac{1}{n}1_{y_{i}\in B^{c}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Estimating a d.f.
+ with a DP prior
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If 
+\begin_inset Formula $B=(-\infty,y]$
+\end_inset
+
+ then
+\begin_inset Formula 
+\[
+E\left(F(y)|y_{1},...,y_{n}\right)=\left(\frac{\alpha}{\alpha+n}\right)F_{0}(y)+\left(\frac{n}{\alpha+n}\right)F_{n}(y)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $F(y)$
+\end_inset
+
+ is the unknown d.f.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F_{0}(y)$
+\end_inset
+
+ is the d.f.
+ from 
+\begin_inset Formula $P_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F_{n}(y)=\frac{1}{n}\sum1_{y_{i}\leq y}$
+\end_inset
+
+ is the empirical d.f.
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Note: under the DP posterior, 
+\begin_inset Formula $F(\cdot)$
+\end_inset
+
+ is discrete with probability one.
+ Not great for continuous data ...
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+This is true in general: 
+\series bold
+realisations from a DP are discrete with probability one
+\series default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Estimating a d.f.
+ with a DP prior
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Dirichlet4CDF.eps
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Stick-breaking characterization of the DP
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $P\sim DP(\alpha P_{0})$
+\end_inset
+
+ is equivalent to an 
+\series bold
+infinite mixture of point masses
+\series default
+
+\begin_inset Formula 
+\[
+P(\cdot)=\sum_{h=1}^{\infty}\pi_{h}\delta_{\theta_{i}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pi_{h}=V_{h}\prod_{\ell<h}(1-V_{\ell})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+V_{h}\overset{iid}{\sim}Beta(1,\alpha)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\theta_{h}\overset{iid}{\sim}P_{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Stick picture
+\end_layout
+
+\begin_layout Itemize
+Alternative notation for 
+\begin_inset Formula $P\sim DP(\alpha P_{0})$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+\pi=(\pi_{1},\pi_{2},...)\sim\mathrm{Stick}(\alpha)\mbox{\text{ and }}\theta_{h}\sim P_{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Simulating stick-breaking priors 
+\begin_inset Formula $\alpha=10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename CompareSticksAlpha10.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Simulating stick-breaking priors 
+\begin_inset Formula $\alpha=100$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename CompareSticksAlpha100.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Simulating stick-breaking priors 
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename CompareSticksAlpha1.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Simulating stick-breaking priors 
+\begin_inset Formula $\alpha=1000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename CompareSticksAlpha1000.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Beyond DP - Pitman-Yor and Probit sticks
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Pitman-Yor process 
+\series default
+with parameters 
+\begin_inset Formula $P_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $0\leq a<1$
+\end_inset
+
+ and 
+\begin_inset Formula $b>-a$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+P(\cdot)=\sum_{h=1}^{\infty}\pi_{h}\delta_{\theta_{i}}\quad\theta_{h}\overset{iid}{\sim}P_{0}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pi_{h}=V_{h}\prod_{\ell<h}(1-V_{\ell})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+V_{h}\overset{iid}{\sim}Beta(1-a,b+ha)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Probit stick-breaking 
+\series default
+with parameters 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+P(\cdot)=\sum_{h=1}^{\infty}\pi_{h}\delta_{\theta_{i}}\quad\theta_{h}\overset{iid}{\sim}P_{0}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pi_{h}=V_{h}\prod_{\ell<h}(1-V_{\ell})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+V_{h}=\Phi(x_{h}),\;\text{ where \ensuremath{x_{h}\overset{iid}{\sim}N(\mu,\sigma^{2})}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Finite mixture models
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Mixture of normals
+\series default
+
+\begin_inset Formula 
+\[
+p(y)=\sum_{j=1}^{k}\pi_{j}\cdot\phi(y;\mu_{j},\sigma_{j}^{2})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Use 
+\series bold
+allocation variables
+\series default
+: 
+\begin_inset Formula $I_{i}=j$
+\end_inset
+
+ if 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ comes from 
+\begin_inset Formula $\phi(y;\mu_{j},\sigma_{j}^{2})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $I=(I_{1},...,I_{n})'$
+\end_inset
+
+ and 
+\begin_inset Formula $n_{j}=\sum_{i=1}^{n}\left(I_{i}=j\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Gibbs sampling
+\series default
+ algorithm:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\pi_{1},...,\pi_{k}$
+\end_inset
+
+ 
+\begin_inset Formula $|$
+\end_inset
+
+ 
+\begin_inset Formula $I,y\sim Dirichlet(a_{1}+n_{1},a_{2}+n_{2},...,a_{k}+n_{k})$
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sigma_{j}^{2}$
+\end_inset
+
+ 
+\begin_inset Formula $|$
+\end_inset
+
+ 
+\begin_inset Formula $I,y\sim Inv$
+\end_inset
+
+-
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu_{j}|I,\sigma_{j}^{2},y\sim N$
+\end_inset
+
+ for 
+\begin_inset Formula $j=1,...,k$
+\end_inset
+
+.
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $I_{i}$
+\end_inset
+
+ 
+\begin_inset Formula $|$
+\end_inset
+
+ 
+\begin_inset Formula $\pi,\mu,\sigma^{2},y\sim Multinomial(\omega_{i,1},...,\omega_{i,k})$
+\end_inset
+
+, 
+\begin_inset Formula $i=1,...,n,$
+\end_inset
+
+ where
+\begin_inset Formula 
+\[
+\omega_{i,j}=\frac{\pi_{j}\cdot\phi(y_{i};\mu_{j},\sigma_{j}^{2})}{\sum_{q=1}^{k}\pi_{q}\cdot\phi(y_{i};\mu_{q},\sigma_{q}^{2})}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Infinite mixture models - DP mixtures
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+General mixture formulation
+\begin_inset Formula 
+\[
+f(y|P)=\int\mathcal{K}(y|\theta)dP(\theta)
+\]
+
+\end_inset
+
+
+\series default
+where 
+\begin_inset Formula $\mathcal{K}(y|\theta)$
+\end_inset
+
+ is a kernel and 
+\begin_inset Formula $P(\theta)$
+\end_inset
+
+ is a 
+\series bold
+mixing measure
+\series default
+.
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Example 1: 
+\series bold
+Student-
+\begin_inset Formula $t$
+\end_inset
+
+
+\series default
+, 
+\begin_inset Formula $t_{\nu}(\mu,\sigma^{2})$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mathcal{K}(y|\theta)=\phi(y|\mu,\lambda)$
+\end_inset
+
+ where 
+\begin_inset Formula $\mu$
+\end_inset
+
+ is fixed, 
+\begin_inset Formula $\theta=\lambda$
+\end_inset
+
+ and 
+\begin_inset Formula $P(\theta)$
+\end_inset
+
+ is the 
+\begin_inset Formula $Inv-\chi^{2}(\nu,\sigma^{2})$
+\end_inset
+
+ distribution.
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Example 2: 
+\series bold
+Finite mixture of normals
+\series default
+.
+ 
+\begin_inset Formula $\phi(y|\mu,\sigma^{2})$
+\end_inset
+
+, 
+\begin_inset Formula $\theta=(\mu,\sigma^{2})$
+\end_inset
+
+.
+ 
+\begin_inset Formula $P(\theta)$
+\end_inset
+
+ is a discrete distr.
+ with 
+\begin_inset Formula $\mathrm{Pr}\left[\theta=(\mu_{j},\sigma_{j}^{2})\right]=\pi_{j}$
+\end_inset
+
+, for 
+\begin_inset Formula $j=1,...,k.$
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Example 3: 
+\begin_inset Formula $P\sim DP(\alpha P_{0})$
+\end_inset
+
+ yields the 
+\series bold
+infinite mixture
+\series default
+
+\begin_inset Formula 
+\[
+f(y)=\sum_{h=1}^{\infty}\pi_{h}\mathcal{K}(y|\theta_{h}^{*}),\qquad\pi\sim\mathrm{Stick}(\alpha).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+DP mixture is like a finite mixture with large 
+\begin_inset Formula $k$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+In infinite mixtures 
+\series bold
+every observation has its own parameter
+\series default
+ 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+y_{i}\sim\mathcal{K}(\theta_{i})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+DP is almost surely discrete 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\series bold
+ties
+\series default
+: some of the 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ will have exactly the same values.
+ 
+\series bold
+DP leads to
+\series default
+ 
+\series bold
+clustering
+\series default
+ of the 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+.
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Each observation has 
+\series bold
+potentially
+\series default
+ its own parameter 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+, but that 
+\series bold
+parameter may be shared by other observations
+\series default
+.
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+In finite mixture models each observation also has its 
+\begin_inset Quotes eld
+\end_inset
+
+own
+\begin_inset Quotes erd
+\end_inset
+
+ parameter
+\begin_inset Formula 
+\[
+y_{i}|I_{i}\sim\mathcal{K}(\theta_{I_{i}})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+I_{i}|\pi\sim Multinomial(\pi_{1},...,\pi_{k})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\theta_{i}\sim P_{0}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pi\sim Dirichlet(\alpha/k,....,\alpha/k)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Neal (2000) shows that this finite mixture model approaches the DP mixture
+ when 
+\begin_inset Formula $k\rightarrow\infty$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Marginalizing out 
+\begin_inset Formula $P$
+\end_inset
+
+ from a DP - Polya scheme
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\series bold
+Hierarchical representation of DP mixtures
+\series default
+
+\begin_inset Formula 
+\[
+y_{i}\sim\mathcal{K}(\theta_{i}),\qquad\theta_{i}\sim P\qquad P\sim DP(\alpha P_{0})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+We can actually 
+\series bold
+marginalize out 
+\begin_inset Formula $P$
+\end_inset
+
+
+\series default
+ to obtain the 
+\series bold
+Polya scheme
+\series default
+
+\begin_inset Formula 
+\[
+p(\theta_{i}|\theta_{1},...,\theta_{i-1})\sim\left(\frac{\alpha}{\alpha+i-1}\right)P_{0}(\theta_{i})+\left(\frac{1}{\alpha+i-1}\right)\sum_{j=1}^{i-1}\delta_{\theta_{j}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+So 
+\begin_inset Formula $p(\theta_{i}|\theta_{1},...,\theta_{i-1})$
+\end_inset
+
+ is a mixture of the base measure 
+\begin_inset Formula $P_{0}$
+\end_inset
+
+ and point masses at the previously 
+\begin_inset Quotes eld
+\end_inset
+
+drawn
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\theta$
+\end_inset
+
+-values.
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Way to think about the scary 'Marginalizing out 
+\begin_inset Formula $P$
+\end_inset
+
+': integrate out 
+\begin_inset Formula $\pi$
+\end_inset
+
+ in the finite mixture model and let 
+\begin_inset Formula $k\rightarrow\infty$
+\end_inset
+
+.
+ [Neal, 2000].
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+DPs and the Chinese restaurant process
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The so called 
+\series bold
+Polya scheme
+\series default
+:
+\begin_inset Formula 
+\[
+p(\theta_{i}|\theta_{1},...,\theta_{i-1})\sim\left(\frac{\alpha}{\alpha+i-1}\right)P_{0}(\theta_{i})+\left(\frac{1}{\alpha+i-1}\right)\sum_{j=1}^{i-1}\delta_{\theta_{j}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Chinese restaurant process
+\series default
+: 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+first customer sits at empty table and obtains the dish 
+\begin_inset Formula $\theta_{1}^{*}$
+\end_inset
+
+ from 
+\begin_inset Formula $P_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+second customer 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+sits at first customer's table with probability 
+\begin_inset Formula $\frac{1}{1+\alpha}$
+\end_inset
+
+ and has dish 
+\begin_inset Formula $\theta_{1}^{*}$
+\end_inset
+
+ or 
+\end_layout
+
+\begin_layout Itemize
+sits at a new table with probability 
+\begin_inset Formula $\frac{\alpha}{1+\alpha}$
+\end_inset
+
+ and has dish 
+\begin_inset Formula $\theta_{2}^{*}\sim P_{0}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\vdots$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the 
+\begin_inset Formula $i$
+\end_inset
+
+th customer 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+sits at table with dish 
+\begin_inset Formula $\theta_{j}^{*}$
+\end_inset
+
+ with a probability proportional to 
+\begin_inset Formula $n_{j}$
+\end_inset
+
+, the number of customers sitting at table 
+\begin_inset Formula $j$
+\end_inset
+
+ or 
+\end_layout
+
+\begin_layout Itemize
+sits at a new table with probability proportional to 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Gibbs sampling DP mixtures - marginalizing 
+\begin_inset Formula $P$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Similar to Gibbs sampling for finite mixtures.
+ Data augmentation with mixture component indicators 
+\begin_inset Formula $I_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Update component allocation
+\series default
+ for 
+\begin_inset Formula $i$
+\end_inset
+
+th observation 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ by sampling from multinomial
+\begin_inset Formula 
+\[
+\mathrm{Pr}(I_{i}=j|\cdot)\propto\begin{cases}
+n_{j}^{(-i)}\mathcal{K}(y_{i}|\theta_{j}^{*}) & \text{ for }j=1,...,k^{(-i)}\\
+\alpha\int\mathcal{K}(y_{i}|\theta)dP_{0}(\theta) & \text{ for }j=k^{(-i)}+1
+\end{cases}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Update 
+\series default
+the unique 
+\series bold
+parameter values
+\series default
+ 
+\begin_inset Formula $\theta^{*}$
+\end_inset
+
+ by sampling from
+\begin_inset Formula 
+\[
+p(\theta_{j}^{*}|\cdot)\propto P_{0}(\theta_{c}^{*})\prod_{i:I_{j}=j}\mathcal{K}(y_{i}|\theta_{j}^{*})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Note that, unlike finite mixtures, the 
+\series bold
+
+\begin_inset Formula $I_{i}$
+\end_inset
+
+ are
+\series default
+ 
+\series bold
+not independent
+\series default
+ conditional on 
+\begin_inset Formula $\theta^{*}$
+\end_inset
+
+.
+ This because we have marginalized out 
+\begin_inset Formula $P$
+\end_inset
+
+.
+ They have to be sampled 
+\series bold
+sequentially
+\series default
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Gibbs sampling for truncated DP mixtures
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Set upper bound 
+\begin_inset Formula $N$
+\end_inset
+
+ for the number of components.
+ Approximate DP mixture with 
+\begin_inset Formula $\pi_{h}=0$
+\end_inset
+
+ for 
+\begin_inset Formula $h=N+1,...$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+Posterior samping for infinite mixtures is now very similar to finite mixture.
+ The 
+\begin_inset Formula $I_{i}$
+\end_inset
+
+ can be sampled independently.
+\end_layout
+
+\begin_layout Enumerate
+Update component allocation for 
+\begin_inset Formula $i$
+\end_inset
+
+th observation 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ by sampling from multinomial
+\begin_inset Formula 
+\[
+\mathrm{Pr}(I_{i}=j|\cdot)\propto\pi_{j}\mathcal{K}(y_{i}|\theta_{j}^{*})\quad\text{for }j=1,2,...,N.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Update the stick-breaking weights [recall: 
+\begin_inset Formula $\pi_{h}=V_{h}\prod_{\ell<h}(1-V_{\ell})$
+\end_inset
+
+]
+\begin_inset Formula 
+\[
+V_{j}|\cdot\sim Beta\left(1+n_{j},\alpha+\sum_{q=j+1}^{N}n_{q}\right)\qquad\text{for }j=1,...,N-1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Update the unique parameter values 
+\begin_inset Formula $\theta_{1}^{*},...\theta_{N}^{*}$
+\end_inset
+
+ by sampling just like in the finite mixture model.
+ Sample 
+\begin_inset Formula $\theta^{*}$
+\end_inset
+
+ from prior 
+\begin_inset Formula $P_{0}(\theta)$
+\end_inset
+
+ for empty clusters.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+MCMC for DP mixtures
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Let's look at the updating step:
+\begin_inset Formula 
+\[
+\mathrm{Pr}(I_{i}=j|\cdot)\propto\begin{cases}
+n_{j}^{(-i)}\mathcal{K}(y_{i}|\theta_{c}^{*}) & \text{ for }j=1,...,k^{(-i)}\\
+\alpha\int\mathcal{K}(y_{i}|\theta)dP_{0}(\theta) & \text{ for }j=k^{(-i)}+1
+\end{cases}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Note also that 
+\series bold
+a customer chooses table based on
+\series default
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+the number of existing customers at the tables (with imaginary 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ customers at a new table)
+\end_layout
+
+\begin_layout Itemize
+how compatible the taste of the customer (
+\begin_inset Formula $y_{i}$
+\end_inset
+
+) is to the different dishes served at occupied tables (
+\begin_inset Formula $\theta_{c}^{*}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+how compatible the taste of the customer (
+\begin_inset Formula $y_{i}$
+\end_inset
+
+) is to the different dishes that 
+\emph on
+may
+\emph default
+ be served at a new table.
+ 
+\end_layout
+
+\begin_layout Itemize
+A 
+\begin_inset Formula $P_{0}(\theta)$
+\end_inset
+
+ with large variance is equivalent to an very experimental cook.
+ You never know what you get ...
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Hyperparameter 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ clearly matters for the number of clusters (tables), but so does 
+\begin_inset Formula $P_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Hyperparameter 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ can be learned from data.
+ Just add updating step.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $P_{0}$
+\end_inset
+
+ may contain hyperparameters (e.g.
+ 
+\begin_inset Formula $P_{0}=N(\mu,\sigma^{2})$
+\end_inset
+
+).
+ Just add updating steps for those.
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Mixture of multivariate regressions - Model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The response vector 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ is 
+\begin_inset Formula $p$
+\end_inset
+
+-dim.
+ Covariates 
+\begin_inset Formula $\mathbf{x}$
+\end_inset
+
+ is 
+\begin_inset Formula $q$
+\end_inset
+
+-dim.
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The model is of the form
+\begin_inset Formula 
+\[
+p(\mathbf{y}|\mathbf{x})=\sum_{j=1}^{\infty}\pi_{j}\cdot N(\mathbf{y}_{i}|\mathbf{B}_{j}\mathbf{x}_{i},\Sigma_{j})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Each component in the mixture is a Gaussian multivariate regression with
+ its own regression coefficient and covariance matrix:
+\begin_inset Formula 
+\[
+\underset{p\times1}{\mathbf{y}_{i}}=\underset{p\times q}{\mathbf{B}_{j}}\underset{q\times1}{\mathbf{x}_{i}}+\underset{p\times1}{\varepsilon_{i}},\;\varepsilon_{i}\overset{iid}{\sim}N\left(0,\Sigma_{j}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The mixture weights follow a DP stick prior 
+\begin_inset Formula $\pi\sim Stick(\alpha)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Mixture of multivariate regressions - Data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename MultiRegSimulatedData.eps
+	scale 55
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Mixture of multivariate regressions - DPM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename MultiRegDPMalpha2.eps
+	scale 55
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Mixture of multivariate regressions - DPM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename MultiRegPosterior.eps
+	scale 55
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\end_body
+\end_document
