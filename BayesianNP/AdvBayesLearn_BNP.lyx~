@@ -2593,9 +2593,9 @@ n_{j}^{(-i)}\mathcal{K}(y_{i}|\theta_{c}^{*}) & \text{ for }j=1,...,k^{(-i)}\\
 \end_layout
 
 \begin_layout Itemize
-Note also that 
+
 \series bold
-a customer chooses table based on
+A customer chooses table based on
 \series default
 :
 \end_layout
